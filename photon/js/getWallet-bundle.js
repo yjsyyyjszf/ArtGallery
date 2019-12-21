@@ -29093,7 +29093,8 @@ if (window.ethereum) {
     window.ethereum
       .enable()
       .then(res => {
-        alert(res[0]);
+        document.getElementById("wallet").innerHTML = res[0];
+
 
       })
       .catch(err => null);
