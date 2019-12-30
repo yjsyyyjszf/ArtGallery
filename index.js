@@ -1,5 +1,5 @@
 const express = require('express');
-const clientRouter = require('./sever/routes/route');
+const clientRouter = require('./server/routes/route');
 const app = express();
 var reload = require('reload')
 
