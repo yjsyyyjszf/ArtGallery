@@ -20,7 +20,7 @@ clientRouter.get( '/service', (request, response) => {
 });
 
 clientRouter.get( '/contact', (request, response) => {
-    response.sendFile(path.resolve('./public/pages/ray.html'))
+    response.sendFile(path.resolve('./public/pages/Ray.html'))
 });
 
 clientRouter.get( '/about', (request, response) => {
