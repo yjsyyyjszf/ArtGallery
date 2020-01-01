@@ -41,9 +41,9 @@ clientRouter.get( '/header', (request, response) => {
 
 clientRouter.get('/api/imagerecognition', async(req, res) => {
     let file=req.query.file;
-    console.log(file);
+    //console.log(file);
     let imageResponse=  await visionAPI.getLabels(file);
-  console.log(imageResponse);
+    console.log(imageResponse);
     res.send(imageResponse);
 });
 
