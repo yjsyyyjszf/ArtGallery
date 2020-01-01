@@ -11,6 +11,7 @@ app.use(express.static(www));
 console.log(`serving ${www}`);
 
 app.get('/', (req, res) => {
+    
     res.sendFile(path.resolve('./public/pages/index.html'));
 });
 
