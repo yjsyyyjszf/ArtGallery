@@ -1,6 +1,7 @@
 const express = require('express');
 const clientRouter = express.Router();
 const path = require('path');
+const visionAPI= require('../../public/google_vision/googleVision');
 
 clientRouter.get( '/client', (request, response) => {
     response.send('Under Maintenance');
@@ -30,11 +31,21 @@ clientRouter.get( '/single', (request, response) => {
     response.sendFile(path.resolve('./public/pages/single.html'))
 });
 
+clientRouter.get( '/imgrecognition', (request, response) => {
+    response.sendFile(path.resolve('./public/pages/imagerecognition.html'))
+});
+
 clientRouter.get( '/header', (request, response) => {
     response.sendFile(path.resolve('./public/pages/header.html'))
 });
 
-
+clientRouter.get('/api/imagerecognition', async(req, res) => {
+    let file=req.query.file;
+    console.log(file);
+    let imageResponse=  await visionAPI.getLabels(file);
+  console.log(imageResponse);
+    res.send(imageResponse);
+});
 
 //Export the home router for other modules to use
 module.exports = clientRouter;
