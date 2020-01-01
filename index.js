@@ -2,7 +2,6 @@ const express = require('express');
 const clientRouter = require('./server/routes/route');
 const app = express();
 const path = require('path');
-var reload = require('reload')
 
 const port = process.env.PORT || 3000;
 
