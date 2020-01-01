@@ -11,7 +11,7 @@ app.use(express.static(www));
 console.log(`serving ${www}`);
 
 app.get('/', (req, res) => {
-    response.sendFile(path.resolve('./public/pages/index.html'));
+    res.sendFile(path.resolve('./public/pages/index.html'));
 });
 
 app.use(/*route*/ '/', /*router*/ clientRouter);
