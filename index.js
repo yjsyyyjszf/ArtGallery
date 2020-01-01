@@ -9,6 +9,7 @@ const www = process.env.WWW || './';
 app.use(express.static(www));
 
 console.log(`serving ${www}`);
+
 app.get('/', (req, res) => {
     response.sendFile(path.resolve('./public/pages/index.html'));
 });
@@ -16,4 +17,3 @@ app.get('/', (req, res) => {
 app.use(/*route*/ '/', /*router*/ clientRouter);
 
 app.listen(port, () => console.log(`listening on http://localhost:${port}`));
-// console.log(quickstart());
