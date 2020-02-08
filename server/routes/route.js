@@ -1,51 +1,59 @@
-const express = require('express');
+const express = require("express");
 const clientRouter = express.Router();
-const path = require('path');
-const visionAPI= require('../../public/google_vision/googleVision');
+const path = require("path");
+const visionAPI = require("../../public/google_vision/googleVision");
 
-clientRouter.get( '/client', (request, response) => {
-    response.send('Under Maintenance');
+clientRouter.get("/client", (request, response) => {
+  response.send("Under Maintenance");
 });
 
-clientRouter.get('/dependency/bootstrap',(request,response)=>{
-    response.sendFile(path.resolve('./public/pages/css/bootstrap.min.css'))
+clientRouter.get("/dependency/bootstrap", (request, response) => {
+  response.sendFile(path.resolve("./public/pages/css/bootstrap.min.css"));
 });
 
-clientRouter.get( '/index', (request, response) => {
-    response.sendFile(path.resolve('./public/pages/index.html'))
+clientRouter.get("/index", (request, response) => {
+  response.sendFile(path.resolve("./public/pages/index.html"));
 });
 
-clientRouter.get( '/service', (request, response) => {
-    response.sendFile(path.resolve('./public/pages/services.html'))
+clientRouter.get("/service", (request, response) => {
+  response.sendFile(path.resolve("./public/pages/services.html"));
 });
 
-clientRouter.get( '/contact', (request, response) => {
-    
-    response.sendFile(path.resolve('./public/pages/Ray.html'))
+clientRouter.get("/contact", (request, response) => {
+  response.sendFile(path.resolve("./public/pages/ray.html"));
 });
 
-clientRouter.get( '/about', (request, response) => {
-    response.sendFile(path.resolve('./public/pages/about.html'))
+clientRouter.get("/about", (request, response) => {
+  response.sendFile(path.resolve("./public/pages/about.html"));
 });
 
-clientRouter.get( '/single', (request, response) => {
-    response.sendFile(path.resolve('./public/pages/single.html'))
+clientRouter.get("/single", (request, response) => {
+  response.sendFile(path.resolve("./public/pages/single.html"));
+});
+clientRouter.get("/shop", (request, response) => {
+  response.sendFile(path.resolve("./public/pages/shop.html"));
+});
+clientRouter.get("/register", (request, response) => {
+  response.sendFile(path.resolve("./public/pages/register.html"));
+});
+clientRouter.get("/imageUpload", (request, response) => {
+  response.sendFile(path.resolve("./public/pages/imageUpload.html"));
 });
 
-clientRouter.get( '/imgrecognition', (request, response) => {
-    response.sendFile(path.resolve('./public/pages/imagerecognition.html'))
+clientRouter.get("/imgrecognition", (request, response) => {
+  response.sendFile(path.resolve("./public/pages/imagerecognition.html"));
 });
 
-clientRouter.get( '/header', (request, response) => {
-    response.sendFile(path.resolve('./public/pages/header.html'))
+clientRouter.get("/header", (request, response) => {
+  response.sendFile(path.resolve("./public/pages/header.html"));
 });
 
-clientRouter.get('/api/imagerecognition', async(req, res) => {
-    let file=req.query.file;
-    //console.log(file);
-    let imageResponse=  await visionAPI.getLabels(file);
-    console.log(imageResponse);
-    res.send(imageResponse);
+clientRouter.get("/api/imagerecognition", async (req, res) => {
+  let file = req.query.file;
+  console.log(file);
+  let imageResponse = await visionAPI.getLabels(file);
+  console.log(imageResponse);
+  res.send(imageResponse);
 });
 
 //Export the home router for other modules to use
