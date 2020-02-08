@@ -1,5 +1,5 @@
-// const Web3 = require('web3');
-const axios = require('axios');
+const Web3 = require("web3");
+const axios = require("axios");
 // if (window.ethereum) {
 //     window.web3 = new Web3(window.ethereum);
 
@@ -13,15 +13,37 @@ const axios = require('axios');
 //   } else if (window.web3) {
 //     window.web3 = new Web3(window.web3.currentProvider);
 //   }
-  axios
+function buy(input) {
+  console.log(input);
+}
+axios
   .get(`http://localhost:8080/getOnStoreTokens/`)
   .then(res => {
     // res.data
     var tableStr = "";
-    for(var i=0;i<res.data.length;i++){
-      console.log(res.data[i]);
-      tableStr+="<tr><td>"+res.data[i]+"</td></tr>";
+    console.log(res);
+    for (var i = 0; i < res.data.length; i++) {
+      tableStr +=
+        "<tr><td>" +
+        res.data[i][0] +
+        "<br>" +
+        res.data[i][1] +
+        "<br>" +
+        res.data[i][2] +
+        "<br>" +
+        res.data[i][3] +
+        "<br>" +
+        "<img src='" +
+        res.data[i][4] +
+        "'><br>" +
+        "<button type='button' onclick='" +
+        i +
+        ")'>" +
+        "Buy!" +
+        "</button>" +
+        "</td></tr>";
     }
+
     document.getElementById("shop").innerHTML = tableStr;
   })
-  .catch(err => alert(err))
+  .catch(err => alert(err));
