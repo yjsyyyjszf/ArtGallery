@@ -80,8 +80,72 @@
         <textarea name="message" id="displayResult" cols="30" rows="7" class="form-control" placeholder="Tags will be gnerated once you upload the picture"></textarea>
       </div>
     </div>
+    <!-- Hides all the child element until user uploads photo -->
+    <div id="submit"  style="display: none;"> 
+    <div class="row form-group">
+      <div class="col-md-12">
+        <label class="text-black" for="message">Please state your artist name(s) for this artwork.</label> 
+        <input type="text" id="fname" class="form-control">
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-md-12">
+        <label class="text-black" for="message">What is the title of your art piece?</label> 
+        <input type="text" id="fname" class="form-control">
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-md-12">
+        <label class="text-black" for="message">What is the original date of creation?</label> 
+        <input data-provide="datepicker" class="form-control">
+        
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-md-12">
+        <label class="text-black" for="message">Provide us with a description/artist statement of your artwork</label> 
+        <input type="text" id="fname" class="form-control">  
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-md-12">
+        <label class="text-black" for="message">(if applicable) provide a URL link to an online description/preview of it.</label> 
+        <input type="text" id="fname" class="form-control">  
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-md-12">
+        <label class="text-black" for="message"> What are the file types you are uploading into this artwork?</label> 
+        <input type="text" id="fname" class="form-control">  
+      </div>
+    </div>
+
+    <div class="row form-group">
+      <div class="col-md-12">
+        <label class="text-black" for="message"> If any, what non-digital aspects are included in this work? </label> 
+        <input type="text" id="fname" placeholder="e.g. physical installation, instructions, 2D or 3D works etc." class="form-control">  
+      </div>
+    </div>
+
+    <div class="row form-group">
+      <div class="col-md-12">
+        <label class="text-black" for="message">Is this work a specific version/iteration or part of a series?  </label> 
+        <textarea name="message" id="displayResult" cols="30" rows="7" class="form-control" placeholder="If so, please specify and make the connection to previously uploaded works."></textarea>
+      </div>
+    </div>
+
+    <div class="row form-group">
+      <div class="col-md-12">
+        <label class="text-black" for="message">
+          Do you consider this work to be culturally specific or traditional? </label> 
+        <input type="text" id="fname" placeholder="e.g. physical installation, instructions, 2D or 3D works etc." class="form-control">  
+      </div>
+    </div>
+    
+    
     <!-- <input type="text" class="form-control mb-2 mr-sm-2" id="displayResult" style="font-weight: bold;color: darkblue;"/> -->
-    <button type="submit" id="submit" style="display: none;" class="btn btn-primary mb-2">Save Image</button>
+    <button type="submit" class="btn btn-primary mb-2">Save Image</button>
+    </div>
     </form>
     </div>
   </form>
@@ -128,12 +192,7 @@
                 }
             }
     </script>
-                <!-- <div class="row form-group">
-                  <div class="col-md-12">
-                    <input type="submit" value="Send Message" class="btn btn-primary py-2 px-4 text-white">
-                  </div>
-                </div> -->
-
+             
     
               </form>
             </div>
@@ -185,5 +244,6 @@
       <script>
         includeHTML();
         </script>
+
   </body>
 </html>
