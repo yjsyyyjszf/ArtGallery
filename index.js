@@ -28,7 +28,6 @@ app.get('/', (req, res) => {
 
 app.use(/*route*/ '/', /*router*/ clientRouter);
 
-
 //mongo code
 //schema 
 var ItemSchema = new Schema(
