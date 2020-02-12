@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        #fileName {
+            width: 100px;
+            height: 100px;
+            background-position: center center;
+        }
+    </style>
+</head>
+<div w3-include-html="/header"></div>
+<script>
+    function includeHTML() {
+        var z, i, elmnt, file, xhttp;
+        /* Loop through a collection of all HTML elements: */
+        z = document.getElementsByTagName("*");
+        for (i = 0; i < z.length; i++) {
+            elmnt = z[i];
+            /*search for elements with a certain atrribute:*/
+            file = elmnt.getAttribute("w3-include-html");
+            if (file) {
+                /* Make an HTTP request using the attribute value as the file name: */
+                xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4) {
+                        if (this.status == 200) {
+                            elmnt.innerHTML = this.responseText;
+                        }
+                        if (this.status == 404) {
+                            elmnt.innerHTML = "Page not found.";
+                        }
+                        /* Remove the attribute, and call this function once more: */
+                        elmnt.removeAttribute("w3-include-html");
+                        includeHTML();
+                    }
+                }
+                xhttp.open("GET", file, true);
+                xhttp.send();
+
+
+                /* Exit the function: */
+                return;
+            }
+        }
+    }
+</script>
+
+<body>
+    <div class="site-section" data-aos="fade">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-7">
+                    <div class="row mb-5">
+                        <div class="col-12 ">
+                            <h2 class="site-section-heading text-center">Sign Up Form</h2>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-8 mb-5">
+                            <!-- <h4 class="site-section-heading text-center"> Form</h4> -->
+                            <form action="/login" method="post">
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label class="text-black" for="fname"> Name</label>
+                                        <input type="text" id="name" name="name" class="form-control"
+                                            required="Name is Required">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <label class="text-black" for="fname"> Password</label>
+                                        <input type="password" id="password" name="password" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-12">
+                                        <input type="submit" value="Login"
+                                            class="btn btn-primary py-2 px-4 text-white">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer py-4">
+        <div class="container-fluid text-center">
+            <p>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                Copyright &copy;<script data-cfasync="false"
+                    src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+                <script>
+                    document.write(new Date().getFullYear());
+                </script> All rights reserved | This template is made with <i class="icon-heart-o"
+                    aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </p>
+        </div>
+    </div>
+    </div>
+    <script type="module" src="../public/js/getWallet-bundle.js"></script>
+    <script src="../public/js/jquery-3.3.1.min.js"></script>
+    <script src="../public/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="../public/js/jquery-ui.js"></script>
+    <script src="../public/js/popper.min.js"></script>
+    <script src="../public/js/bootstrap.min.js"></script>
+    <script src="../public/js/owl.carousel.min.js"></script>
+    <script src="../public/js/jquery.stellar.min.js"></script>
+    <script src="../public/js/jquery.countdown.min.js"></script>
+    <script src="../public/js/jquery.magnific-popup.min.js"></script>
+    <script src="../public/js/bootstrap-datepicker.min.js"></script>
+    <script src="../public/js/swiper.min.js"></script>
+    <script src="../public/js/aos.js"></script>
+    <script src="../public/js/picturefill.min.js"></script>
+    <script src="../public/js/lightgallery-all.min.js"></script>
+    <script src="../public/js/jquery.mousewheel.min.js"></script>
+
+    <script src="../public/js/main.js"></script>
+
+    <script>
+        function associateCultureCheckbox() {
+            var value;
+            if (document.getElementById('r1').checked) {
+                value = document.getElementById('r1').value;
+            } else {
+                value = document.getElementById('r2').value;
+            }
+            console.log(value);
+            if (value == 'yes') {
+                document.getElementById('associate_culture_textarea_label').style.display = 'block';
+                document.getElementById('associate_culture_textarea').style.display = 'block';
+            } else {
+                document.getElementById('associate_culture_textarea_label').style.display = 'none';
+                document.getElementById('associate_culture_textarea').style.display = 'none';
+            }
+        }
+    </script>
+    <script>
+        includeHTML();
+    </script>
+</body>
+
+</html>
