@@ -22,7 +22,6 @@ const dbName = 'mayorwilson';
 app.use(express.static(www));
 console.log(`serving ${www}`);
 
-
 app.use(bodyParser.json());
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({
@@ -57,12 +56,6 @@ app.use(/*route*/ '/', /*router*/ clientRouter);
 //   newItem.img.contentType = 'image/jpg';
 //   newItem.save();
 //  });
-
-
-
-
-
-
 
 /*
 * Sign Up 
@@ -114,16 +107,17 @@ app.post('/login', function (req, res) {
     "email": email,
     "password": pass
   }
-  MongoClient.connect(uri, function (err, client) {
-    assert.equal(null, err);
-    console.log("Connected successfully to MongoDB");
-    const db = client.db(dbName);
-    db.collection('details').insertOne(data, function (err, collection) {
+  var dbResult;
+  MongoClient.connect(url, function(err, db) {
+    if (err) throw err;
+    db.collection("details").find({}).toArray(function(err, result) {
       if (err) throw err;
-      console.log("Record inserted Successfully");
+      console.log(result);
+      dbResult=result;
+      db.close();
     });
-    client.close();
   });
+
   return null;
 
   // return res.redirect('signup_success.html'); 
