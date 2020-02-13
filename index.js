@@ -32,6 +32,54 @@ app.get('/', (req, res) => {
 
 app.use(/*route*/ '/', /*router*/ clientRouter);
 
+/** 
+* Save photo to server
+*
+*/
+const multer = require("multer");
+
+const handleError = (err, res) => {
+  res
+    .status(500)
+    .contentType("text/plain")
+    .end("Oops! Something went wrong!");
+};
+const upload = multer({
+  dest: "/uploaded/files"
+  // you might also want to set some limits: https://github.com/expressjs/multer#limits
+});
+
+
+app.post(
+  "/upload",
+  upload.single("userPhoto" /* name attribute of <file> element in your form */),
+  (req, res) => {
+    const tempPath = req.file.path;
+    const targetPath = path.join(__dirname, "./uploads/"+req.body.userPhoto);
+
+    // if (path.extname(req.file.originalname).toLowerCase() === ".png") {
+      if (path.extname(req.file.originalname).toLowerCase() === ".jpg") {
+      fs.rename(tempPath, targetPath, err => {
+        if (err) return handleError(err, res);
+
+        res
+          .status(200)
+          .contentType("text/plain")
+          .end("File uploaded!");
+      });
+    } else {
+      fs.unlink(tempPath, err => {
+        if (err) return handleError(err, res);
+
+        res
+          .status(403)
+          .contentType("text/plain")
+          .end("Only .png files are allowed!");
+      });
+    }
+  }
+);
+
 /**
  * Save photo to mongodb
  * 
@@ -41,8 +89,8 @@ app.post('/api/photos', function (req, res) {
   MongoClient.connect(uri, function (err, client) {
     const db = client.db(dbName);
     var bucket = new mongodb.GridFSBucket(db);
-    fs.createReadStream('./dog.jpg').
-      pipe(bucket.openUploadStream('dog.jpg')).
+    fs.createReadStream('./public/resources/'+req.body.userPhoto).
+      pipe(bucket.openUploadStream(req.body.userPhoto)).
       on('error', function (error) {
         assert.ifError(error);
       }).
@@ -117,7 +165,7 @@ app.post('/login', function (req, res) {
     if (err) throw err;
     db.collection("details").find({}).toArray(function (err, result) {
       if (err) throw err;
-      console.log(result);
+      //console.log(result);
       dbResult = result;
       client.close();
       var resV = false;
