@@ -1,24 +1,22 @@
 const express = require('express');
 var bodyParser = require("body-parser");
 const clientRouter = require('./server/routes/route');
-var User1 = require('../ArtGallry/public/schema/user');
+var Grid = require("gridfs-stream");
+var fs = require('fs');
 const app = express();
 const path = require('path');
 
-const port = process.env.PORT || 3000;
-
-const www = process.env.WWW || './';
-
-
 //Mongo connection 
 const MongoClient = require('mongodb').MongoClient;
+const mongodb = require('mongodb');
 var mongoose = require('mongoose');
-var multer = require('multer');
 var Schema = mongoose.Schema;
 const assert = require('assert');
 const uri = "mongodb+srv://deep:dnp@4283@cluster0-kdmbn.mongodb.net";
 const dbName = 'mayorwilson';
 
+const port = process.env.PORT || 3000;
+const www = process.env.WWW || './';
 app.use(express.static(www));
 console.log(`serving ${www}`);
 
@@ -29,33 +27,34 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.resolve('./public/pages/index.html'));
+  res.sendFile(path.resolve('./public/pages/login.html'));
 });
 
 app.use(/*route*/ '/', /*router*/ clientRouter);
-//mongo code
-//schema 
-// var ItemSchema = new Schema(
-//   { img: 
-//       { data: Buffer, contentType: String }
-//   }
-// );
-// var Item = mongoose.model('Clothes',ItemSchema);
 
-// //multer middleware to  the path of the image we are uploading.
-// app.use(multer({ dest: './uploads/',
-//   rename: function (fieldname, filename) {
-//     return filename;
-//   },
-//  }).any());
+/**
+ * Save photo to mongodb
+ * 
+ */
+app.post('/api/photos', function (req, res) {
+  Grid.mongo = mongoose.mongo;
+  MongoClient.connect(uri, function (err, client) {
+    const db = client.db(dbName);
+    var bucket = new mongodb.GridFSBucket(db);
+    fs.createReadStream('./dog.jpg').
+      pipe(bucket.openUploadStream('dog.jpg')).
+      on('error', function (error) {
+        assert.ifError(error);
+      }).
+      on('finish', function () {
+        console.log('done!');
+        client.close();
+        res.status(200).send("image saved!");
+      });
+  });
 
 
-//  app.post('/api/photos',function(req,res){
-//   var newItem = new Item();
-//   newItem.img.data = fs.readFileSync(req.files.userPhoto.path)
-//   newItem.img.contentType = 'image/jpg';
-//   newItem.save();
-//  });
+});
 
 /*
 * Sign Up 
@@ -82,13 +81,18 @@ app.post('/sign_up', function (req, res) {
     "tags": tags,
     "agencies": agencies
   }
+
   MongoClient.connect(uri, function (err, client) {
     assert.equal(null, err);
     console.log("Connected successfully to MongoDB");
     const db = client.db(dbName);
     db.collection('details').insertOne(data, function (err, collection) {
-      if (err) throw err;
+      if (err) {
+        res.send(400).send(err);
+        console.log(err);
+      }
       console.log("Record inserted Successfully");
+      res.status(200).send("data saved!");
     });
     client.close();
   })
@@ -108,13 +112,27 @@ app.post('/login', function (req, res) {
     "password": pass
   }
   var dbResult;
-  MongoClient.connect(url, function(err, db) {
+  MongoClient.connect(uri, function (err, client) {
+    const db = client.db(dbName);
     if (err) throw err;
-    db.collection("details").find({}).toArray(function(err, result) {
+    db.collection("details").find({}).toArray(function (err, result) {
       if (err) throw err;
       console.log(result);
-      dbResult=result;
-      db.close();
+      dbResult = result;
+      client.close();
+      var resV = false;
+      var resData;
+      dbResult.forEach((user) => {
+        if (user.email == email && user.password == pass) {
+          resV = true;
+          resData = user;
+        }
+      });
+      console.log('result:' + resV);
+      if (resV)
+        res.sendFile(path.resolve('./public/pages/index.html'));
+      else
+        res.status(404).send('Invalid username and password');
     });
   });
 

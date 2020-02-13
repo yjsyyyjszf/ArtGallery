@@ -47,7 +47,9 @@ clientRouter.get("/imgrecognition", (request, response) => {
 clientRouter.get("/header", (request, response) => {
   response.sendFile(path.resolve("./public/pages/header.html"));
 });
-
+clientRouter.get("/header_login", (request, response) => {
+  response.sendFile(path.resolve("./public/pages/header_login.html"));
+});
 clientRouter.get("/api/imagerecognition", async (req, res) => {
   let file = req.query.file;
   console.log(file);
