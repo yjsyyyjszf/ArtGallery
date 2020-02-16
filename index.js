@@ -1,66 +1,113 @@
-const express = require('express');
+const express = require("express");
 var bodyParser = require("body-parser");
-const clientRouter = require('./server/routes/route');
+const clientRouter = require("./server/routes/route");
 var Grid = require("gridfs-stream");
-var fs = require('fs');
+var fs = require("fs");
 const app = express();
-const path = require('path');
+const path = require("path");
 
-//Mongo connection 
-const MongoClient = require('mongodb').MongoClient;
-const mongodb = require('mongodb');
-var mongoose = require('mongoose');
+//Mongo connection
+const MongoClient = require("mongodb").MongoClient;
+const mongodb = require("mongodb");
+var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
-const assert = require('assert');
+const assert = require("assert");
 const uri = "mongodb+srv://deep:dnp@4283@cluster0-kdmbn.mongodb.net";
-const dbName = 'mayorwilson';
+const dbName = "mayorwilson";
 
 const port = process.env.PORT || 3000;
-const www = process.env.WWW || './';
+const www = process.env.WWW || "./";
 app.use(express.static(www));
 console.log(`serving ${www}`);
 
 app.use(bodyParser.json());
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(express.static("public"));
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
 
-app.get('/', (req, res) => {
-  res.sendFile(path.resolve('./public/pages/login.html'));
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve("./public/pages/login.html"));
 });
 
-app.use(/*route*/ '/', /*router*/ clientRouter);
+app.use(/*route*/ "/", /*router*/ clientRouter);
+
+/**
+ * Save photo to server
+ *
+ */
+const multer = require("multer");
+
+const handleError = (err, res) => {
+  res
+    .status(500)
+    .contentType("text/plain")
+    .end("Oops! Something went wrong!");
+};
+const upload = multer({
+  dest: "/uploaded/files"
+  // you might also want to set some limits: https://github.com/expressjs/multer#limits
+});
+
+app.post(
+  "/upload",
+  upload.single(
+    "userPhoto" /* name attribute of <file> element in your form */
+  ),
+  (req, res) => {
+    const tempPath = req.file.path;
+    console.log(tempPath);
+    const targetPath = path.join(__dirname, "./uploads/" + req.body.userPhoto);
+
+    // if (path.extname(req.file.originalname).toLowerCase() === ".png") {
+    if (path.extname(req.file.originalname).toLowerCase() === ".png") {
+      fs.rename(tempPath, targetPath + ".png", err => {
+        if (err) return handleError(err, res);
+
+        res.redirect("/imageUpload/?" + req.body.userPhoto);
+      });
+    } else {
+      fs.unlink(tempPath, err => {
+        if (err) return handleError(err, res);
+
+        res
+          .status(403)
+          .contentType("text/plain")
+          .end("Only .png files are allowed!");
+      });
+    }
+  }
+);
 
 /**
  * Save photo to mongodb
- * 
+ *
  */
-app.post('/api/photos', function (req, res) {
+app.post("/api/photos", function(req, res) {
   Grid.mongo = mongoose.mongo;
-  MongoClient.connect(uri, function (err, client) {
+  MongoClient.connect(uri, function(err, client) {
     const db = client.db(dbName);
     var bucket = new mongodb.GridFSBucket(db);
-    fs.createReadStream('./dog.jpg').
-      pipe(bucket.openUploadStream('dog.jpg')).
-      on('error', function (error) {
+    fs.createReadStream("./public/resources/" + req.body.userPhoto)
+      .pipe(bucket.openUploadStream(req.body.userPhoto))
+      .on("error", function(error) {
         assert.ifError(error);
-      }).
-      on('finish', function () {
-        console.log('done!');
+      })
+      .on("finish", function() {
+        console.log("done!");
         client.close();
         res.status(200).send("image saved!");
       });
   });
-
-
 });
 
 /*
-* Sign Up 
-*
-*/
-app.post('/sign_up', function (req, res) {
+ * Sign Up
+ *
+ */
+app.post("/sign_up", function(req, res) {
   console.log(req.body);
   var name = req.body.name;
   var email = req.body.email;
@@ -72,21 +119,21 @@ app.post('/sign_up', function (req, res) {
   var agencies = req.body.agencies;
 
   var data = {
-    "name": name,
-    "email": email,
-    "password": pass,
-    "biography": biography,
-    "associate": associate,
-    "associate_culture_checkbox": associate_culture_checkbox,
-    "tags": tags,
-    "agencies": agencies
-  }
+    name: name,
+    email: email,
+    password: pass,
+    biography: biography,
+    associate: associate,
+    associate_culture_checkbox: associate_culture_checkbox,
+    tags: tags,
+    agencies: agencies
+  };
 
-  MongoClient.connect(uri, function (err, client) {
+  MongoClient.connect(uri, function(err, client) {
     assert.equal(null, err);
     console.log("Connected successfully to MongoDB");
     const db = client.db(dbName);
-    db.collection('details').insertOne(data, function (err, collection) {
+    db.collection("details").insertOne(data, function(err, collection) {
       if (err) {
         res.send(400).send(err);
         console.log(err);
@@ -95,50 +142,49 @@ app.post('/sign_up', function (req, res) {
       res.status(200).send("data saved!");
     });
     client.close();
-  })
+  });
 });
 
-
 /*
-* Login 
-*
-*/
-app.post('/login', function (req, res) {
+ * Login
+ *
+ */
+app.post("/login", function(req, res) {
   console.log(req.body);
   var email = req.body.email;
   var pass = req.body.password;
   var data = {
-    "email": email,
-    "password": pass
-  }
+    email: email,
+    password: pass
+  };
   var dbResult;
-  MongoClient.connect(uri, function (err, client) {
+  MongoClient.connect(uri, function(err, client) {
     const db = client.db(dbName);
     if (err) throw err;
-    db.collection("details").find({}).toArray(function (err, result) {
-      if (err) throw err;
-      console.log(result);
-      dbResult = result;
-      client.close();
-      var resV = false;
-      var resData;
-      dbResult.forEach((user) => {
-        if (user.email == email && user.password == pass) {
-          resV = true;
-          resData = user;
-        }
+    db.collection("details")
+      .find({})
+      .toArray(function(err, result) {
+        if (err) throw err;
+        //console.log(result);
+        dbResult = result;
+        client.close();
+        var resV = false;
+        var resData;
+        dbResult.forEach(user => {
+          if (user.email == email && user.password == pass) {
+            resV = true;
+            resData = user;
+          }
+        });
+        console.log("result:" + resV);
+        if (resV) res.sendFile(path.resolve("./public/pages/index.html"));
+        else res.status(404).send("Invalid username and password");
       });
-      console.log('result:' + resV);
-      if (resV)
-        res.sendFile(path.resolve('./public/pages/index.html'));
-      else
-        res.status(404).send('Invalid username and password');
-    });
   });
 
   return null;
 
-  // return res.redirect('signup_success.html'); 
+  // return res.redirect('signup_success.html');
 });
 
-app.listen(port, () => console.log(`listening on http://localhost:${port}`))
+app.listen(port, () => console.log(`listening on http://localhost:${port}`));

@@ -11,7 +11,7 @@ async function getLabels(imagefileName) {
      const [result] = await client.labelDetection('./public/resources/'+imagefileName);
      const labels = result.labelAnnotations;
      console.log('Labels:');
-     labels.forEach(label => console.log(label.description));
+     //labels.forEach(label => console.log(label.description));
      return labels;
     }catch(e){
         console.log(e);

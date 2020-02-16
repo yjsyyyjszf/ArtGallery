@@ -82,7 +82,7 @@
                   
                   <div class="col-md-12">
                     <label class="text-black" for="thumbnail">Thumbnail URL</label> 
-                    <input type="text" name="thumbnail" class="form-control">
+                    <input type="text" id="thumbnail" name="thumbnail" class="form-control">
                   </div>
                 </div>
 
@@ -171,6 +171,11 @@
     // });
   </script>
       <script>
+        var sPageURL = window.location.href;
+        var sURLVariables = sPageURL.split('?');
+        // alert(sURLVariables[1]);
+        document.getElementById("thumbnail").value = "http://localhost:3000/uploads/"+sURLVariables[1]+".png";
+
         includeHTML();
         </script>
   </body>
