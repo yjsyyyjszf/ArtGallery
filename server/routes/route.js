@@ -43,7 +43,9 @@ clientRouter.get("/imageUpload", (request, response) => {
 clientRouter.get("/imgrecognition", (request, response) => {
   response.sendFile(path.resolve("./public/pages/imagerecognition.html"));
 });
-
+clientRouter.get("/metamask", (request, response) => {
+  response.sendFile(path.resolve("./public/pages/metamask.html"));
+});
 clientRouter.get("/header", (request, response) => {
   response.sendFile(path.resolve("./public/pages/header.html"));
 });
