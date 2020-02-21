@@ -9,7 +9,7 @@
             }    
         </style>
     </head>
-<div w3-include-html="/header"></div>
+<div w3-include-html="/header_login"></div>
 <script>
   function includeHTML() {
     var z, i, elmnt, file, xhttp;
@@ -41,7 +41,8 @@
     }
   }
   </script>
-
+  <!-- Sweet alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <body>
   <div class="site-section" data-aos="fade">
     <div class="container-fluid">
@@ -60,7 +61,7 @@
                 <div class="row form-group">
                   <div class="col-md-12">
                     <label class="text-black" for="fname"> Name</label>
-                    <input type="text" id="name" name="name" class="form-control" required="Name is Required">
+                    <input onfocus="displayAlertForMetamask()" type="text" id="name" name="name" class="form-control" required="Name is Required">
                   </div>
                 </div>
 
@@ -123,7 +124,7 @@
                 </div>
                 <div class="row form-group">
                   <div class="col-md-12">
-                    <input type="submit" value="Register" class="btn btn-primary py-2 px-4 text-white">
+                    <input type="submit" value="Register"  class="btn btn-primary py-2 px-4 text-white">
                   </div>
                 </div>
               </form>
@@ -149,6 +150,11 @@
     </div>
   </div>
   </div>
+  <script>
+    function displayAlertForMetamask(){
+      swal("After Registering, please create an account on metamask", "We use ethereum and blockchain for purchasing art");
+    }
+  </script>
   <script type="module" src="../public/js/getWallet-bundle.js"></script>
   <script src="../public/js/jquery-3.3.1.min.js"></script>
   <script src="../public/js/jquery-migrate-3.0.1.min.js"></script>

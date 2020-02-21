@@ -70,7 +70,15 @@
                 <li><a href="/service">Services</a></li>
                 <li><a href="/about">About</a></li>
                 <li><a href="/imgrecognition">Image Recognition</a></li>
-                <li><a href="/contact">Sign Up Form</a></li>
+                
+                <li style="display: none;"><a href="/contact">Sign Up Form</a></li>
+                <li class="has-children">
+                  <a><i id="userName">Profile</i></a>
+                  <ul class="dropdown">
+                    <li><a href="/profile">View Profile</a></li>
+                    <li><a href="/logout">Logout </a></li>
+                  </ul>
+                </li>
               </ul>
             </nav>
           </div>
@@ -125,5 +133,30 @@
     <script>
       $(document).ready(function(){
         $('#lightgallery').lightGallery();
-      });
+      
+            var request = new XMLHttpRequest();
+            var params = 'email=' + document.getElementById('email').value + '&password=' + document.getElementById(
+                'password').value;
+            request.open('POST', '/login', true);
+            request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+            request.send(params);
+            request.onload = function () {
+                console.log('Status Code: ' + request.status);
+                if (request.status >= 200 && request.status < 400) {
+                    let data = JSON.parse(this.response);
+                    console.log("Response Status: " + data.status);
+                    window.location.replace('/home');
+                } else {
+                    // console.log('Api error');
+                    // swal(request.responseText);
+                    Swal.fire({
+                        icon: 'error',
+                        title: "<i>Invalid Email or Password!</i>",
+                        html: "Could  not find your account with provided email and password",
+                        confirmButtonText: "Okay",
+                    });
+                }
+            }
+        });
     </script>
