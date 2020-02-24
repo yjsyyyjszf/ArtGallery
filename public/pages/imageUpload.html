@@ -48,7 +48,7 @@
     </style>
 <body>
 
-
+<span id="unit" hidden></span>
 
   <div class="site-section" data-aos="fade">
     <div class="container-fluid">
@@ -92,8 +92,8 @@
                 </div>
                 <div class="row form-group">
                   <div class="col-md-12">
-                    <label class="text-black" for="price">Price(ETH)</label> 
-                    <input type="number" name="price" class="form-control">
+                    <label class="text-black" for="price">Price(ETH) ~= <span id="priceUSD"></span> USD</label> 
+                    <input id="price" type="number" name="price" class="form-control" step="0.001" onchange="unit()">
                   </div>
                 </div>
                 <div class="row form-group">
@@ -205,7 +205,13 @@
         // alert(sURLVariables[1]);
         document.getElementById("thumbnail").value = "http://localhost:3000/uploads/"+sURLVariables[1]+".png";
 
-        includeHTML();
+        // includeHTML();
+        function unit(){
+          var unit = document.getElementById("unit").value;
+          var price = document.getElementById("price").value;
+          document.getElementById("priceUSD").innerHTML = unit * price;
+          
+        }
         </script>
   </body>
 </html>
