@@ -168,8 +168,8 @@
                     &nbsp;Family&nbsp;<input type="checkbox" name="tags" value="Family">
                     &nbsp;Documentary&nbsp;<input type="checkbox" name="tags" value="Documentary">
                     &nbsp;3-D Render&nbsp;<input type="checkbox" name="tags" value="3-D Render">
-                    &nbsp;Other&nbsp;<input type="checkbox" name="tags" id="tags_other" value="Other">   
-                    <textarea name="tags" id="tags" cols="20" rows="7" class="form-control"
+                    &nbsp;Other&nbsp;<input type="checkbox" name="tags" onclick="tagsCheckbox()" id="tags_other" value="Other">   
+                    <textarea style="display: none;"  name="tags" id="tags" cols="20" rows="7" class="form-control"
                       placeholder="themes, qualities and media of your body of work: e.g. VR, video, painting, audio, interdisciplinary, diaspora, feminism, research-creation, commercial, culture/tradition, sexuality, educational, political issues, social justice, etc.)"></textarea>
                   </div>
                 </div>
@@ -256,18 +256,11 @@
     function tagsCheckbox() {
       var value;
       if (document.getElementById('tags_other').checked) {
-        value = document.getElementById('r1').value;
+        document.getElementById('tags').style.display='block';
       } else {
-        value = document.getElementById('r2').value;
+        document.getElementById('tags').style.display='none';
       }
-      console.log(value);
-      if(value=='yes'){
-          document.getElementById('associate_culture_textarea_label').style.display='block';
-          document.getElementById('associate_culture_textarea').style.display='block';
-      }else{
-        document.getElementById('associate_culture_textarea_label').style.display='none';
-        document.getElementById('associate_culture_textarea').style.display='none';
-      }
+      
     }
   </script>
   <script>
