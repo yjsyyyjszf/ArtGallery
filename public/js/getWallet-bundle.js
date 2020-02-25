@@ -58,30 +58,35 @@ module.exports = require('../package.json').version;
 
 },{"../package.json":4}],4:[function(require,module,exports){
 module.exports={
-  "_from": "@web3-js/websocket@^1.0.29",
+  "_args": [
+    [
+      "@web3-js/websocket@1.0.30",
+      "D:\\BlockChain Proj\\DRM\\ArtGallery"
+    ]
+  ],
+  "_from": "@web3-js/websocket@1.0.30",
   "_id": "@web3-js/websocket@1.0.30",
   "_inBundle": false,
   "_integrity": "sha512-fDwrD47MiDrzcJdSeTLF75aCcxVVt8B1N74rA+vh2XCAvFy4tEWJjtnUtj2QG7/zlQ6g9cQ88bZFBxwd9/FmtA==",
   "_location": "/@web3-js/websocket",
   "_phantomChildren": {},
   "_requested": {
-    "type": "range",
+    "type": "version",
     "registry": true,
-    "raw": "@web3-js/websocket@^1.0.29",
+    "raw": "@web3-js/websocket@1.0.30",
     "name": "@web3-js/websocket",
     "escapedName": "@web3-js%2fwebsocket",
     "scope": "@web3-js",
-    "rawSpec": "^1.0.29",
+    "rawSpec": "1.0.30",
     "saveSpec": null,
-    "fetchSpec": "^1.0.29"
+    "fetchSpec": "1.0.30"
   },
   "_requiredBy": [
     "/web3-providers-ws"
   ],
   "_resolved": "https://registry.npmjs.org/@web3-js/websocket/-/websocket-1.0.30.tgz",
-  "_shasum": "9ea15b7b582cf3bf3e8bc1f4d3d54c0731a87f87",
-  "_spec": "@web3-js/websocket@^1.0.29",
-  "_where": "D:\\BlockChain Proj\\DRM\\ArtGallery\\node_modules\\web3-providers-ws",
+  "_spec": "1.0.30",
+  "_where": "D:\\BlockChain Proj\\DRM\\ArtGallery",
   "author": {
     "name": "Brian McKelvey",
     "email": "theturtle32@gmail.com",
@@ -91,7 +96,6 @@ module.exports={
   "bugs": {
     "url": "https://github.com/web3-js/WebSocket-Node/issues"
   },
-  "bundleDependencies": false,
   "config": {
     "verbose": false
   },
@@ -109,7 +113,6 @@ module.exports={
     "typedarray-to-buffer": "^3.1.5",
     "yaeti": "^0.0.6"
   },
-  "deprecated": false,
   "description": "Websocket Client & Server Library implementing the WebSocket protocol as specified in RFC 6455.",
   "devDependencies": {
     "buffer-equal": "^1.0.0",
@@ -13184,21 +13187,27 @@ utils.intFromLE = intFromLE;
 
 },{"bn.js":23,"minimalistic-assert":171,"minimalistic-crypto-utils":172}],87:[function(require,module,exports){
 module.exports={
-  "_from": "elliptic@^6.4.0",
+  "_args": [
+    [
+      "elliptic@6.5.2",
+      "D:\\BlockChain Proj\\DRM\\ArtGallery"
+    ]
+  ],
+  "_from": "elliptic@6.5.2",
   "_id": "elliptic@6.5.2",
   "_inBundle": false,
   "_integrity": "sha512-f4x70okzZbIQl/NSRLkI/+tteV/9WqL98zx+SQ69KbXxmVrmjwsNUPn/gYJJ0sHvEak24cZgHIPegRePAtA/xw==",
   "_location": "/elliptic",
   "_phantomChildren": {},
   "_requested": {
-    "type": "range",
+    "type": "version",
     "registry": true,
-    "raw": "elliptic@^6.4.0",
+    "raw": "elliptic@6.5.2",
     "name": "elliptic",
     "escapedName": "elliptic",
-    "rawSpec": "^6.4.0",
+    "rawSpec": "6.5.2",
     "saveSpec": null,
-    "fetchSpec": "^6.4.0"
+    "fetchSpec": "6.5.2"
   },
   "_requiredBy": [
     "/browserify-sign",
@@ -13209,9 +13218,8 @@ module.exports={
     "/web3-utils/eth-lib"
   ],
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.5.2.tgz",
-  "_shasum": "05c5678d7173c049d8ca433552224a495d0e3762",
-  "_spec": "elliptic@^6.4.0",
-  "_where": "D:\\BlockChain Proj\\DRM\\ArtGallery\\node_modules\\eth-lib",
+  "_spec": "6.5.2",
+  "_where": "D:\\BlockChain Proj\\DRM\\ArtGallery",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -13219,7 +13227,6 @@ module.exports={
   "bugs": {
     "url": "https://github.com/indutny/elliptic/issues"
   },
-  "bundleDependencies": false,
   "dependencies": {
     "bn.js": "^4.4.0",
     "brorand": "^1.0.1",
@@ -13229,7 +13236,6 @@ module.exports={
     "minimalistic-assert": "^1.0.0",
     "minimalistic-crypto-utils": "^1.0.0"
   },
-  "deprecated": false,
   "description": "EC cryptography",
   "devDependencies": {
     "brfs": "^1.4.3",
@@ -46782,30 +46788,34 @@ module.exports = {
 }).call(this,{"isBuffer":require("../../../../../../node_js/node_modules/browserify/node_modules/is-buffer/index.js")})
 },{"../../../../../../node_js/node_modules/browserify/node_modules/is-buffer/index.js":396,"bn.js":23,"eth-lib/lib/hash":271,"ethereum-bloom-filters":94,"number-to-bn":174,"underscore":224,"utf8":226}],275:[function(require,module,exports){
 module.exports={
-  "_from": "web3",
+  "_args": [
+    [
+      "web3@1.2.6",
+      "D:\\BlockChain Proj\\DRM\\ArtGallery"
+    ]
+  ],
+  "_from": "web3@1.2.6",
   "_id": "web3@1.2.6",
   "_inBundle": false,
   "_integrity": "sha512-tpu9fLIComgxGrFsD8LUtA4s4aCZk7px8UfcdEy6kS2uDi/ZfR07KJqpXZMij7Jvlq+cQrTAhsPSiBVvoMaivA==",
   "_location": "/web3",
   "_phantomChildren": {},
   "_requested": {
-    "type": "tag",
+    "type": "version",
     "registry": true,
-    "raw": "web3",
+    "raw": "web3@1.2.6",
     "name": "web3",
     "escapedName": "web3",
-    "rawSpec": "",
+    "rawSpec": "1.2.6",
     "saveSpec": null,
-    "fetchSpec": "latest"
+    "fetchSpec": "1.2.6"
   },
   "_requiredBy": [
-    "#USER",
     "/"
   ],
   "_resolved": "https://registry.npmjs.org/web3/-/web3-1.2.6.tgz",
-  "_shasum": "c497dcb14cdd8d6d9fb6b445b3b68ff83f8ccf68",
-  "_spec": "web3",
-  "_where": "D:\\BlockChain Proj\\DRM\\ArtGallery\\public\\js",
+  "_spec": "1.2.6",
+  "_where": "D:\\BlockChain Proj\\DRM\\ArtGallery",
   "author": {
     "name": "ethereum.org"
   },
@@ -46838,7 +46848,6 @@ module.exports={
   "bugs": {
     "url": "https://github.com/ethereum/web3.js/issues"
   },
-  "bundleDependencies": false,
   "dependencies": {
     "@types/node": "^12.6.1",
     "web3-bzz": "1.2.6",
@@ -46849,7 +46858,6 @@ module.exports={
     "web3-shh": "1.2.6",
     "web3-utils": "1.2.6"
   },
-  "deprecated": false,
   "description": "Ethereum JavaScript API",
   "devDependencies": {
     "definitelytyped-header-parser": "^1.0.1",
@@ -48018,8 +48026,9 @@ function extend() {
 
 },{}],290:[function(require,module,exports){
 const Web3 = require("web3");
-
+console.log(123);
 if (window.ethereum) {
+  console.log("metamask");
   window.web3 = new Web3(window.ethereum);
 
   window.ethereum
@@ -48031,6 +48040,9 @@ if (window.ethereum) {
     .catch(err => null);
 } else if (window.web3) {
   window.web3 = new Web3(window.web3.currentProvider);
+} else {
+  console.log("no metamask");
+  window.location.replace("http://localhost:3000/metamask");
 }
 
 },{"web3":276}],291:[function(require,module,exports){

@@ -2,10 +2,9 @@
 <html lang="en">
 <div w3-include-html="./header.html"></div>
 <head>
-  <title>Photon &mdash; Colorlib Website Template</title>
+  <title> e</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  
   <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300i,400,700" rel="stylesheet">
   <link rel="stylesheet" href="fonts/icomoon/style.css">
 
@@ -22,10 +21,34 @@
   <link rel="stylesheet" href="../public/css/style.css">
 
 </head>
-
+<style>
+    .tooltip2 {
+      position: relative;
+      display: inline-block;
+      border-bottom: 1px dotted black;
+    }
+    
+    .tooltip2 .tooltiptext2 {
+      visibility: hidden;
+      width: 300px;
+      background-color: black;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px 0;
+    
+      /* Position the tooltip */
+      position: absolute;
+      z-index: 1;
+    }
+    
+    .tooltip2:hover .tooltiptext2 {
+      visibility: visible;
+    }
+    </style>
 <body>
 
-
+<span id="unit" hidden></span>
 
   <div class="site-section" data-aos="fade">
     <div class="container-fluid">
@@ -41,34 +64,45 @@
           <div class="row">
             <div class="col-lg-8 mb-5">
               <form action="http://localhost:8080/tokenGenerate/" method="post">
-               
                 <div class="row form-group">
                   
                   <div class="col-md-12">
-                    <label class="text-black" for="contributes">Contributor addresses</label> 
-                    <input type="text" name="contributes" class="form-control">
+                    <label class="text-black" for="contributes">Contributor addresses</label>
+                    <select name="contributors" id="contributors" class="form-control" multiple>
+                      
+                    </select>
                   </div>
                 </div>
                 <div class="row form-group">
                   <div class="col-md-12">
-                    <label class="text-black" for="percentages">Percentages</label> 
-                    <input type="text" name="percentages" class="form-control">
+                    <div class="tooltip2">Percentages
+                      <span class="tooltiptext2">If there's multiple artist on this artwork, please indicate how many percentage(1-9) they will get as their profit once token sold. 
+                      </span>
+                    </div> 
+                    <div id="percentages"></div>
                   </div>
                 </div>
                 <div class="row form-group">
                   <div class="col-md-12">
-                    <label class="text-black" for="constraints">Constraints</label> 
+                    <div class="tooltip2">Constraints
+                      <span class="tooltiptext2">Setup "white-list" to restraint the user who has ability to access this artwork; You can simply type "school" that only allows school group to use this art. You can even type multi constraint by comma. ex: school,government</span>
+                    </div> 
                     <input type="text" name="constraints" class="form-control">
                   </div>
                 </div>
                 <div class="row form-group">
                   <div class="col-md-12">
+<<<<<<< HEAD
                     <label class="text-black" for="price">Price(ETH)</label> 
                     <input type="number" name="price" class="form-control" step="0.0001">
                   </div>
                   <div class="col-md-12">
                     <label class="text-black" for="price">Token Number</label> 
                     <input type="number" name="num" class="form-control">
+=======
+                    <label class="text-black" for="price">Price(ETH) ~= <span id="priceUSD"></span> USD</label> 
+                    <input id="price" type="number" name="price" class="form-control" step="0.001" onchange="unit()">
+>>>>>>> session_login
                   </div>
                 </div>
                 <div class="row form-group">
@@ -86,7 +120,7 @@
                   
                   <div class="col-md-12">
                     <label class="text-black" for="thumbnail">Thumbnail URL</label> 
-                    <input type="text" name="thumbnail" class="form-control">
+                    <input type="text" id="thumbnail" name="thumbnail" class="form-control">
                   </div>
                 </div>
 
@@ -150,7 +184,7 @@
     
   </div>
   <script type="module" src="../public/js/imgUpload-bundle.js"></script>
-
+  
   <script src="../public/js/jquery-3.3.1.min.js"></script>
   <script src="../public/js/jquery-migrate-3.0.1.min.js"></script>
   <script src="../public/js/jquery-ui.js"></script>
@@ -175,7 +209,18 @@
     // });
   </script>
       <script>
-        includeHTML();
+        var sPageURL = window.location.href;
+        var sURLVariables = sPageURL.split('?');
+        // alert(sURLVariables[1]);
+        document.getElementById("thumbnail").value = "http://localhost:3000/uploads/"+sURLVariables[1]+".png";
+
+        // includeHTML();
+        function unit(){
+          var unit = document.getElementById("unit").value;
+          var price = document.getElementById("price").value;
+          document.getElementById("priceUSD").innerHTML = unit * price;
+          
+        }
         </script>
   </body>
 </html>

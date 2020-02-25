@@ -53,33 +53,7 @@
           <div class="col-10 col-md-8 d-none d-xl-block" data-aos="fade-down">
             <nav class="site-navigation position-relative text-right text-lg-center" role="navigation">
 
-              <ul class="site-menu js-clone-nav mx-auto d-none d-lg-block">
-                <li class="active"><a href="/index">Home</a></li>
-                <li class="has-children">
-                  <a href="/single">Gallery</a>
-                  <ul class="dropdown">
-                    <li><a href="/single">Tough Guy Mountain</a></li>
-                    <li><a href="#">Artist -1 </a></li>
-                    <li><a href="#">Artist -2 </a></li>
-                    <li><a href="#">Artist -3 </a></li>
-                    <li><a href="#">Artist -4 </a></li>
-                    <li><a href="#">Artist -5 </a></li>
-                    <li><a href="#">Artist -6 </a></li>
-                  </ul>
-                </li>
-                <li><a href="/service">Services</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/imgrecognition">Image Recognition</a></li>
-                
-                <li style="display: none;"><a href="/contact">Sign Up Form</a></li>
-                <li class="has-children">
-                  <a ><i id="profile" onload="alert('ss')">Profile</i></a>
-                  <ul class="dropdown">
-                    <li><a href="/names"><i id="userName">View Profile</i></a></li>
-                    <li><a href="/logout">Logout </a></li>
-                  </ul>
-                </li>
-              </ul>
+              
             </nav>
           </div>
 
@@ -129,28 +103,9 @@
     <script src="../public/js/jquery.mousewheel.min.js"></script>
   
     <script src="../public/js/main.js"></script>
-    <script type="text/javascript">
-      function getName() {
-        var request = new XMLHttpRequest();
-        console.log(request);
-        request.open('GET', '/names', true);
-        request.send();
-        request.onload = function () {
-          console.log('Status Code: ' + request.status);
-          if (request.status >= 200 && request.status < 400) {
-            let data = JSON.parse(this.response);
-            console.log(data.name);
-            //console.log("Response : " + this.response);
-            document.getElementById('userName').innerHTML = data.name;
-          } else {
-            console.log('Api error while fetching user name');
-          }
-        }
-      }
-    </script>
+    
     <script>
       $(document).ready(function(){
-        $('#lightgallery').lightGallery(); 
-        });
+        $('#lightgallery').lightGallery();
+      });
     </script>
-    

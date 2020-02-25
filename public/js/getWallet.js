@@ -1,6 +1,7 @@
 const Web3 = require("web3");
-
+console.log(123);
 if (window.ethereum) {
+  console.log("metamask");
   window.web3 = new Web3(window.ethereum);
 
   window.ethereum
@@ -12,4 +13,7 @@ if (window.ethereum) {
     .catch(err => null);
 } else if (window.web3) {
   window.web3 = new Web3(window.web3.currentProvider);
+} else {
+  console.log("no metamask");
+  window.location.replace("http://localhost:3000/metamask");
 }
