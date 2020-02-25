@@ -252,6 +252,23 @@
         document.getElementById('associate_culture_textarea').style.display='none';
       }
     }
+
+    function tagsCheckbox() {
+      var value;
+      if (document.getElementById('tags_other').checked) {
+        value = document.getElementById('r1').value;
+      } else {
+        value = document.getElementById('r2').value;
+      }
+      console.log(value);
+      if(value=='yes'){
+          document.getElementById('associate_culture_textarea_label').style.display='block';
+          document.getElementById('associate_culture_textarea').style.display='block';
+      }else{
+        document.getElementById('associate_culture_textarea_label').style.display='none';
+        document.getElementById('associate_culture_textarea').style.display='none';
+      }
+    }
   </script>
   <script>
     includeHTML();
