@@ -137,17 +137,18 @@ app.post(
     const targetPath = path.join(__dirname, "./uploads/" + req.body.userPhoto);
     // if (path.extname(req.file.originalname).toLowerCase() === ".png") {
     if (path.extname(req.file.originalname).toLowerCase() === ".jpg") {
-      fs.rename(tempPath, targetPath + ".png", err => {
+      fs.rename(tempPath, targetPath + ".jpg", err => {
         if (err) return handleError(err, res);
         res.redirect("/imageUpload/?" + req.body.userPhoto);
       });
     } else {
+
       fs.unlink(tempPath, err => {
         if (err) return handleError(err, res);
         res
           .status(403)
           .contentType("text/plain")
-          .end("Only .png files are allowed!");
+          .end(err);
       });
     }
   }
