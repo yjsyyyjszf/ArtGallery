@@ -43,46 +43,66 @@ app.use(
 app.use(session({
   name: 'sid',
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
   secret: 'secret',
   cookie: {
-    maxAge: 1000 * 60 * 60 * 2,
+    maxAge: 5000 * 60 * 60 * 60,
     sameSite: true
 
   }
 }));
 
-const redirectLogin = (req, res, next) => {
-  if (!req.session.userId) {
-    res.redirect('/')
-  } else {
-    next()
+app.use((req, res, next) => {
+  const { userId } = req.session;
+  if (userId) {
+    res.locals.userId = req.session.userId;
+    res.locals.userName = req.session.userName;
+
   }
+  next()
 
-}
 
+});
 // Get - LoginPage
 app.get("/", (req, res) => {
+  console.log(res.locals.userId);
   res.sendFile(path.resolve("./public/pages/login.html"));
 });
 
 
 //Get - Index.html
-// app.get("/home", (req, res) => {
-//   console.log(req.session.userId);
-//   if (req.session.userId == undefined) {
-//     res.sendFile(path.resolve("./public/pages/login.html"));
-//   }
-//   else {
-//     res.sendFile(path.resolve("./public/pages/index.html"));
-//   }
-// });
-
-
-app.use('/home', (req, res) => {
-  fs.createReadStream('./public/pages/login.html')
-  .pipe(res);
+app.get("/home", (req, res) => {
+  console.log(res.locals.userId);
+  if (req.session.userId == undefined) {
+    res.sendFile(path.resolve("./public/pages/login.html"));
+  }
+  else {
+    res.sendFile(path.resolve("./public/pages/index.html"));
+  }
 });
+app.get("/index", (req, res) => {
+  console.log(res.locals.userId);
+  if (req.session.userId == undefined) {
+    res.sendFile(path.resolve("./public/pages/login.html"));
+  }
+  else {
+    res.sendFile(path.resolve("./public/pages/index.html"));
+  }
+});
+
+
+//Get - user detail for header.html
+app.get("/names", (req, res) => {
+  console.log(req.session.userId + " name: " + req.session.userName);
+
+  if (req.session.userId == 'undefined') {
+    res.sendFile(path.resolve("./public/pages/login.html"));
+  }
+  else {
+    res.send({ id: req.session.userId, name: req.session.userName });
+  }
+});
+
 
 
 
@@ -160,7 +180,7 @@ app.post("/api/photos", function (req, res) {
  *
  */
 app.post("/sign_up", function (req, res) {
-  swal("Hello world!");
+
   console.log(req.body);
   var name = req.body.name;
   var email = req.body.email;
@@ -203,9 +223,20 @@ app.post("/sign_up", function (req, res) {
  * Logout
  * 
  */
-app.post('/logout', redirectLogin, (req, res) => {
-
-
+app.get('/logout', (req, res) => {
+  if (res.locals.userId != 'undefined') {
+    req.session.destroy(err => {
+      if (err) {
+        console.log(err);
+        res.redirect('/');
+      }
+      console.log('logging out ' +res.locals.userName)
+      res.clearCookie('sid');
+      res.redirect('/');
+    })
+  }else{
+    res.redirect('/');
+  }
 });
 /*
  * Login
@@ -248,7 +279,7 @@ app.post("/login", async (req, res) => {
           if (resV) {
             req.session.userId = resData._id;
             req.session.userName = resData.name;
-           // console.log(req.session.userId);
+            // console.log(req.session.userId);
             //res.sendFile(path.resolve("./public/pages/index.html"));
             res.status(200).json('success!');
             //res.send("success");
