@@ -95,15 +95,6 @@ app.get("/index", (req, res) => {
 app.get("/names", (req, res) => {
   console.log(req.session.userId + " name: " + req.session.userName);
 
-<<<<<<< HEAD
-//  app.post('/api/photos',function(req,res){
-//   var newItem = new Item();
-//   newItem.img.data = fs.readFileSync(req.files.userPhoto.path)
-//   newItem.img.contentType = 'image/jpg';
-//   newItem.save();
-//  });
-
-=======
   if (req.session.userId == 'undefined') {
     res.sendFile(path.resolve("./public/pages/login.html"));
   }
@@ -184,17 +175,12 @@ app.post("/api/photos", function (req, res) {
   });
 });
 
->>>>>>> session_login
 /*
  * Sign Up
  *
  */
-<<<<<<< HEAD
-app.post("/sign_up", function(req, res) {
-=======
 app.post("/sign_up", function (req, res) {
 
->>>>>>> session_login
   console.log(req.body);
   var name = req.body.name;
   var email = req.body.email;
@@ -216,17 +202,6 @@ app.post("/sign_up", function (req, res) {
     associate: associate,
     associate_culture_checkbox: associate_culture_checkbox,
     tags: tags,
-<<<<<<< HEAD
-    agencies: agencies,
-    artistWallet: artistWallet
-  };
-  MongoClient.connect(uri, function(err, client) {
-    assert.equal(null, err);
-    console.log("Connected successfully to MongoDB");
-    const db = client.db(dbName);
-    db.collection("details").insertOne(data, function(err, collection) {
-      if (err) throw err;
-=======
     agencies: agencies
   };
   MongoClient.connect(uri, function (err, client) {
@@ -238,7 +213,6 @@ app.post("/sign_up", function (req, res) {
         res.send(400).send(err);
         console.log(err);
       }
->>>>>>> session_login
       console.log("Record inserted Successfully");
       res.status(200).send('<script>swal("data saved!")</script>');
     });
@@ -246,8 +220,6 @@ app.post("/sign_up", function (req, res) {
   });
 });
 
-<<<<<<< HEAD
-=======
 
 /**
  * 
@@ -269,26 +241,10 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
   }
 });
->>>>>>> session_login
 /*
  * Login
  *
  */
-<<<<<<< HEAD
-app.post("/login", function(req, res) {
-  console.log(req.body);
-  var email = req.body.email;
-  var pass = req.body.password;
-  var data = {
-    email: email,
-    password: pass
-  };
-  MongoClient.connect(uri, function(err, client) {
-    assert.equal(null, err);
-    console.log("Connected successfully to MongoDB");
-    const db = client.db(dbName);
-    db.collection("details").insertOne(data, function(err, collection) {
-=======
 app.post("/login", async (req, res) => {
 
   // if(req.session.userId=='wrong'){
@@ -306,7 +262,6 @@ app.post("/login", async (req, res) => {
     var dbResult;
     MongoClient.connect(uri, function (err, client) {
       const db = client.db(dbName);
->>>>>>> session_login
       if (err) throw err;
       db.collection("details")
         .find({})
@@ -340,15 +295,8 @@ app.post("/login", async (req, res) => {
           }
         });
     });
-<<<<<<< HEAD
-    client.close();
-  });
-  return null;
-
-=======
     return null;
   }
->>>>>>> session_login
   // return res.redirect('signup_success.html');
 });
 
