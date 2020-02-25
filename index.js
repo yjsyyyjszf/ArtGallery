@@ -1,20 +1,4 @@
 const express = require("express");
-<<<<<<< HEAD
-var bodyParser = require("body-parser");
-const clientRouter = require("./server/routes/route");
-// var User1 = require('../ArtGallry/public/schema/user');
-const app = express();
-const path = require("path");
-const axios = require("axios");
-const port = process.env.PORT || 3000;
-
-const www = process.env.WWW || "./";
-
-//Mongo connection
-const MongoClient = require("mongodb").MongoClient;
-var mongoose = require("mongoose");
-var multer = require("multer");
-=======
 const session = require("express-session");
 var bodyParser = require("body-parser");
 const clientRouter = require("./server/routes/route");
@@ -38,7 +22,6 @@ app.use(function (req, res, next) {
 const MongoClient = require("mongodb").MongoClient;
 const mongodb = require("mongodb");
 var mongoose = require("mongoose");
->>>>>>> session_login
 var Schema = mongoose.Schema;
 const assert = require("assert");
 const uri = "mongodb+srv://deep:dnp@4283@cluster0-kdmbn.mongodb.net";
