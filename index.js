@@ -114,6 +114,8 @@ app.get("/names", (req, res) => {
 
 app.use(/*route*/ "/", /*router*/ clientRouter);
 
+
+
 /**
  * Save photo to server
  *
@@ -139,22 +141,22 @@ app.post(
   ),
   (req, res) => {
     const tempPath = req.file.path;
-    console.log(tempPath);
+    console.log("tempPath :"+tempPath);
     const targetPath = path.join(__dirname, "./uploads/" + req.body.userPhoto);
-    // if (path.extname(req.file.originalname).toLowerCase() === ".png") {
-    if (path.extname(req.file.originalname).toLowerCase() === ".jpg") {
-      fs.rename(tempPath, targetPath + ".jpg", err => {
+    // if (path.extname(req.file.originalname).toLowerCase() === ".png"){
+   // if (path.extname(req.file.originalname).toLowerCase() === ".jpg") {
+      fs.rename(tempPath, targetPath + ".png", err => {
         if (err) return handleError(err, res);
         res.redirect("/imageUpload/?" + req.body.userPhoto);
       });
-    } else {
-      fs.unlink(tempPath, err => {
-        if (err) return handleError(err, res);
-        res
-          .status(403)
-          .contentType("text/plain")
-          .end(err);
-      });
+    // } else {
+    //   fs.unlink(tempPath, err => {
+    //     if (err) return handleError(err, res);
+    //     res
+    //       .status(403)
+    //       .contentType("text/plain")
+    //       .end(err);
+    //   });
     }
   }
 );
@@ -163,23 +165,23 @@ app.post(
  * Save photo to mongodb
  *
  */
-app.post("/api/photos", function(req, res) {
-  Grid.mongo = mongoose.mongo;
-  MongoClient.connect(uri, function(err, client) {
-    const db = client.db(dbName);
-    var bucket = new mongodb.GridFSBucket(db);
-    fs.createReadStream("./public/resources/" + req.body.userPhoto)
-      .pipe(bucket.openUploadStream(req.body.userPhoto))
-      .on("error", function(error) {
-        assert.ifError(error);
-      })
-      .on("finish", function() {
-        console.log("done!");
-        client.close();
-        res.status(200).send("image saved!");
-      });
-  });
-});
+// app.post("/api/photos", function(req, res) {
+//   Grid.mongo = mongoose.mongo;
+//   MongoClient.connect(uri, function(err, client) {
+//     const db = client.db(dbName);
+//     var bucket = new mongodb.GridFSBucket(db);
+//     fs.createReadStream("./public/resources/" + req.body.userPhoto)
+//       .pipe(bucket.openUploadStream(req.body.userPhoto))
+//       .on("error", function(error) {
+//         assert.ifError(error);
+//       })
+//       .on("finish", function() {
+//         console.log("done!");
+//         client.close();
+//         res.status(200).send("image saved!");
+//       });
+//   });
+// });
 
 /*
  * Sign Up
@@ -219,7 +221,7 @@ app.post("/sign_up", function(req, res) {
         console.log(err);
       }
       console.log("Record inserted Successfully");
-      res.status(200).send('<script>swal("data saved!")</script>');
+      res.redirect('/');
     });
     client.close();
   });
