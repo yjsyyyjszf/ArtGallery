@@ -83,6 +83,16 @@ app.get("/", (req, res) => {
   res.sendFile(path.resolve("./public/pages/login.html"));
 });
 
+
+//Get - profile page 
+app.get("/profile", (req, res) => {
+  console.log(res.locals.userId);
+  if (req.session.userId == undefined) {
+    res.sendFile(path.resolve("./public/pages/login.html"));
+  } else {
+    res.sendFile(path.resolve("./public/pages/profile.html"));
+  }
+});
 //Get - Index.html
 app.get("/home", (req, res) => {
   console.log(res.locals.userId);
@@ -112,6 +122,40 @@ app.get("/names", (req, res) => {
   }
 });
 
+//Get - user detail for header.html
+app.get("/user/data", (req, res) => {
+  if (req.session.userId == "undefined") {
+    res.sendFile(path.resolve("./public/pages/login.html"));
+  } else {
+    var dbResult;
+    MongoClient.connect(uri, function(err, client) {
+      const db = client.db(dbName);
+      if (err) throw err;
+      db.collection("details")
+        .find({})
+        .toArray(function(err, result) {
+          if (err) throw err;
+          dbResult = result;
+          client.close();
+          var resV = false;
+          var resData;
+          dbResult.forEach(user => {
+            if (user._id==req.session.userId) {
+              resV = true;
+              resData = user;
+            }
+          });
+          console.log("result:" + resV);
+          if (resV) {
+            console.log(resData);
+            res.status(200).json(resData);
+          } else {
+            res.status(400).json("oh noes!");
+          }
+        });
+    });
+  }
+});
 app.use(/*route*/ "/", /*router*/ clientRouter);
 
 
@@ -157,7 +201,7 @@ app.post(
     //       .contentType("text/plain")
     //       .end(err);
     //   });
-    }
+    
   }
 );
 
