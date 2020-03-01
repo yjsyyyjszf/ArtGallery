@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="../public/css/swiper.css">
   <link rel="stylesheet" href="../public/css/aos.css">
   <link rel="stylesheet" href="../public/css/style.css">
-
+ 
 </head>
 <style>
     .tooltip2 {
@@ -67,6 +67,7 @@
                 <div class="row form-group">
                   
                   <div class="col-md-12">
+                    <input type="text" name="artistWallet" id="artistWallet" hidden/>
                     <label class="text-black" for="contributes">Contributor addresses</label>
                     <select name="contributors" id="contributors" class="form-control" multiple>
                       
@@ -128,7 +129,7 @@
                 <div class="row form-group">
                   <div class="col-md-12">
                     <label class="text-black" for="description">Description</label> 
-                    <textarea name="message" id="description" cols="30" rows="7" class="form-control" placeholder="Write your description here..."></textarea>
+                    <textarea name="description" id="description" cols="30" rows="7" class="form-control" placeholder="Write your description here..."></textarea>
                   </div>
                 </div>
 
@@ -210,11 +211,12 @@
         var sPageURL = window.location.href;
         var sURLVariables = sPageURL.split('?');
         // alert(sURLVariables[1]);
-        document.getElementById("thumbnail").value = "http://localhost:3000/uploads/"+sURLVariables[1]+".png";
+        document.getElementById("thumbnail").value = "https://artgallery07.herokuapp.com/uploads/"+sURLVariables[1]+".png";
 
         // includeHTML();
         function unit(){
           var unit = document.getElementById("unit").value;
+          console.log(unit);
           var price = document.getElementById("price").value;
           document.getElementById("priceUSD").innerHTML = unit * price;
           

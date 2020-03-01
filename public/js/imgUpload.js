@@ -12,6 +12,13 @@ const axios2 = require("axios");
 //   } else if (window.web3) {
 //     window.web3 = new Web3(window.web3.currentProvider);
 //   }
+window.ethereum
+  .enable()
+  .then(res => {
+    // res[0];
+    document.getElementById("artistWallet").value = res[0];
+  })
+  .catch(err => null);
 axios2.defaults.headers.common["x-api-key"] =
   "jReCGk34kJ6TdpxQ1tsWf3H3bUUaOpXW2kO8sZUI";
 axios2.get("https://api.coinmarketcap.com/v1/ticker/ethereum/").then(res => {
