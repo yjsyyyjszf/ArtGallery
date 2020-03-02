@@ -16,7 +16,6 @@ var flash = require("connect-flash");
 app.use(cookieParser("secret"));
 app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
-app.use(cors({ origin: "https://api.coinmarketcap.com/" }));
 
 let web3;
 let DRM_address = "0x160db70990723b3dbdfc43828a61f68d48f2b650";
