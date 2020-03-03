@@ -179,7 +179,7 @@ app.post(
   upload.single(
     "userPhoto" /* name attribute of <file> element in your form */
   ),
-  (req, res) => {
+  async (req, res) => {
     const tempPath = req.file.path;
     console.log(req.file);
     console.log("tempPath :" + tempPath);
@@ -188,7 +188,6 @@ app.post(
     // if (path.extname(req.file.originalname).toLowerCase() === ".jpg") {
     fs.rename(tempPath, targetPath + ".png", err => {
       if (err) return handleError(err, res);
-      res.redirect("/imageUpload/?" + req.body.title);
     });
     // } else {
     //   fs.unlink(tempPath, err => {
@@ -198,6 +197,56 @@ app.post(
     //       .contentType("text/plain")
     //       .end(err);
     //   });
+    var url = `https://artgallery07.herokuapp.com/uploads/${req.body.title}.png`;
+    try {
+      var wallet = req.body.artistWallet;
+      console.log(wallet);
+      var contributes = req.body.contributes; // address array -- [addr1, addr2]
+      if (contributes == undefined) {
+        var arr = [];
+        arr.push(wallet);
+        contributes = arr;
+        percentages = [];
+      } else {
+        contributes = contributes.split(",");
+        var percentages = req.body.percentages; // % array 1-10 -- [5,5]
+        percentages = percentages.split(",");
+      }
+      var constraints = req.body.constraints; // nullable string array -- ["School","Governmant","Bank"]
+      var price = req.body.price;
+      price = new BigNumber(price * 1000000000000000000);
+      var num = req.body.num;
+      var name = req.body.title;
+      var artist = req.body.artists;
+      var description = req.body.description;
+      var realart = "";
+      var thumbnail = url; // URL only
+      /**
+       *  upload File to server, generate an URL
+       **/
+      var metadata = [name, artist, description, realart, thumbnail];
+      // console.log(contributes);
+      // console.log(percentages);
+      // console.log(price.toString());
+      // console.log(metadata);
+      // console.log(num);
+
+      var transfer = await DRM.methods
+        .tokenGenerate(
+          contributes,
+          percentages,
+          constraints,
+          price.toString(),
+          metadata,
+          num //deployNum
+        )
+        .encodeABI();
+      await sendTxn(transfer);
+      res.sendStatus(200);
+    } catch (err) {
+      console.log(err);
+      res.send(err);
+    }
   }
 );
 
@@ -418,10 +467,10 @@ app.post("/tokenGenerate/", async (req, res) => {
     price = new BigNumber(price * 1000000000000000000);
     var num = req.body.num;
     var name = req.body.title;
-    var artist = req.body.artist;
+    var artist = req.body.artists;
     var description = req.body.description;
     var realart = req.body.realart;
-    var thumbnail = req.body.thumbnail; // URL only
+    var thumbnail = ""; // URL only
     /**
      *  upload File to server, generate an URL
      **/
