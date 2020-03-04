@@ -124,13 +124,16 @@
     </div>
     <div class="col-md-12">
       <input type="text" name="artistWallet" id="artistWallet" hidden/>
-      <label class="text-black" for="contributes">Contributor addresses</label>
+      Contributor addresses<div class="tooltip2">(?)
+        <span class="tooltiptext2">If there's more than 1 artist work on this artwok, please select the num below(include yourself)
+        </span>
+      </div> 
       <select name="contributors" id="contributors" class="form-control" multiple>
       </select>
     </div>
     <div class="row form-group">
       <div class="col-md-12">
-        <div class="tooltip2">Percentages
+        Percentages <div class="tooltip2">(?)
           <span class="tooltiptext2">If there's multiple artist on this artwork, please indicate how many percentage(1-9) they will get as their profit once token sold. 
           </span>
         </div> 
@@ -139,7 +142,7 @@
     </div>
     <div class="row form-group">
       <div class="col-md-12">
-        <div class="tooltip2">Constraints
+        Constraints<div class="tooltip2">(?)
           <span class="tooltiptext2">Setup "white-list" to restraint the user who has ability to access this artwork; You can simply type "school" that only allows school group to use this art. You can even type multi constraint by comma. ex: school,government</span>
         </div> 
         <input type="text" name="constraints" class="form-control">

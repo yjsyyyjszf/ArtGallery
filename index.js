@@ -288,7 +288,9 @@ app.post("/sign_up", async function(req, res) {
   var agencies = req.body.agencies;
   var artistWallet = req.body.artistWallet;
 
-  var transfer = await DRM.methods.artistRegister(artistWallet).encodeABI();
+  var transfer = await DRM.methods
+    .artistRegister(name, artistWallet)
+    .encodeABI();
   await sendTxn(transfer);
 
   var data = {
