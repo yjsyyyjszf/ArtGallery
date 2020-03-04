@@ -48042,7 +48042,7 @@ if (window.ethereum) {
   window.web3 = new Web3(window.web3.currentProvider);
 } else {
   console.log("no metamask");
-  window.location.replace("http://localhost:3000/metamask");
+  window.location.replace("/metamask");
 }
 
 },{"web3":276}],291:[function(require,module,exports){

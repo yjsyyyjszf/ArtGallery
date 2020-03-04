@@ -8,6 +8,31 @@
             background-position: center center;
             }    
         </style>
+        <style>
+          .tooltip2 {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted black;
+          }
+          
+          .tooltip2 .tooltiptext2 {
+            visibility: hidden;
+            width: 300px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+          
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+          }
+          
+          .tooltip2:hover .tooltiptext2 {
+            visibility: visible;
+          }
+          </style>
     </head>
 <div w3-include-html="/header"></div>
 <script>
@@ -65,7 +90,7 @@
                     <label class="text-black" for="fname">First Name</label>
                     <input type="text" id="fname" class="form-control">
                   </div>-->
-                 
+                  
                  
                 <p>Click on Upload image to performe Image Recognition</p>
     <p id="myPic">
@@ -90,10 +115,37 @@
         <input type="text" id="artists" name="artists" class="form-control">
       </div>
     </div>
+    <span id="unit" hidden></span>
     <div class="row form-group">
       <div class="col-md-12">
         <label class="text-black" for="message">What is the title of your art piece?</label> 
         <input type="text"  id="title" name="title" class="form-control">
+      </div>
+    </div>
+    <div class="col-md-12">
+      <input type="text" name="artistWallet" id="artistWallet" hidden/>
+      Contributor addresses<div class="tooltip2">(?)
+        <span class="tooltiptext2">If there's more than 1 artist work on this artwok, please select the num below(include yourself)
+        </span>
+      </div> 
+      <select name="contributors" id="contributors" class="form-control" multiple>
+      </select>
+    </div>
+    <div class="row form-group">
+      <div class="col-md-12">
+        Percentages <div class="tooltip2">(?)
+          <span class="tooltiptext2">If there's multiple artist on this artwork, please indicate how many percentage(1-9) they will get as their profit once token sold. 
+          </span>
+        </div> 
+        <div id="percentages"></div>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-md-12">
+        Constraints<div class="tooltip2">(?)
+          <span class="tooltiptext2">Setup "white-list" to restraint the user who has ability to access this artwork; You can simply type "school" that only allows school group to use this art. You can even type multi constraint by comma. ex: school,government</span>
+        </div> 
+        <input type="text" name="constraints" class="form-control">
       </div>
     </div>
     <div class="row form-group">
@@ -106,7 +158,7 @@
     <div class="row form-group">
       <div class="col-md-12">
         <label class="text-black" for="message">Provide us with a description/artist statement of your artwork</label> 
-        <input type="text" id="fname" class="form-control">  
+        <input type="text" id="description" name="description" class="form-control">  
       </div>
     </div>
     <div class="row form-group">
@@ -128,7 +180,14 @@
         <input type="text" id="fname" placeholder="e.g. physical installation, instructions, 2D or 3D works etc." class="form-control">  
       </div>
     </div>
-
+    <div class="row form-group">
+      <div class="col-md-12">
+        <label class="text-black" for="price">Token Number</label> 
+        <input type="number" name="num" class="form-control">  
+        <label class="text-black" for="price">Price(ETH) ~= <span id="priceUSD"></span> USD</label> 
+        <input id="price" type="number" name="price" class="form-control" step="0.001" onchange="unit()">
+      </div>
+    </div>
     <div class="row form-group">
       <div class="col-md-12">
         <label class="text-black" for="message">Is this work a specific version/iteration or part of a series?  </label> 
@@ -146,7 +205,7 @@
     
     
     <!-- <input type="text" class="form-control mb-2 mr-sm-2" id="displayResult" style="font-weight: bold;color: darkblue;"/> -->
-    <button type="submit" class="btn btn-primary mb-2">Next</button>
+    <button type="submit" class="btn btn-primary mb-2">Submit</button>
     </div>
     </form>
     </div>
@@ -198,7 +257,7 @@
             </div>
         </div>
     
-      </div>
+      </div> 
     </div>
   </div>
 
@@ -222,6 +281,7 @@
     
     
   </div>
+  <script type="module" src="../public/js/imgUpload-bundle.js"></script>
   <script src="../public/js/jquery-3.3.1.min.js"></script>
   <script src="../public/js/jquery-migrate-3.0.1.min.js"></script>
   <script src="../public/js/jquery-ui.js"></script>
@@ -245,6 +305,13 @@
     $(document).ready(function(){
       $('#lightgallery').lightGallery();
     });
+    function unit(){
+          var unit = document.getElementById("unit").value;
+          console.log(unit);
+          var price = document.getElementById("price").value;
+          document.getElementById("priceUSD").innerHTML = unit * price;
+          
+        }
   </script>
       <script>
         includeHTML();

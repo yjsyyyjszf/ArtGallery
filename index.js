@@ -16,7 +16,6 @@ var flash = require("connect-flash");
 app.use(cookieParser("secret"));
 app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
-app.use(cors());
 
 let web3;
 let DRM_address = "0x160db70990723b3dbdfc43828a61f68d48f2b650";
@@ -83,8 +82,7 @@ app.get("/", (req, res) => {
   res.sendFile(path.resolve("./public/pages/login.html"));
 });
 
-
-//Get - profile page 
+//Get - profile page
 app.get("/profile", (req, res) => {
   console.log(res.locals.userId);
   if (req.session.userId == undefined) {
@@ -140,7 +138,7 @@ app.get("/user/data", (req, res) => {
           var resV = false;
           var resData;
           dbResult.forEach(user => {
-            if (user._id==req.session.userId) {
+            if (user._id == req.session.userId) {
               resV = true;
               resData = user;
             }
@@ -157,8 +155,6 @@ app.get("/user/data", (req, res) => {
   }
 });
 app.use(/*route*/ "/", /*router*/ clientRouter);
-
-
 
 /**
  * Save photo to server
@@ -183,16 +179,16 @@ app.post(
   upload.single(
     "userPhoto" /* name attribute of <file> element in your form */
   ),
-  (req, res) => {
+  async (req, res) => {
     const tempPath = req.file.path;
-    console.log("tempPath :"+tempPath);
-    const targetPath = path.join(__dirname, "./uploads/" + req.body.userPhoto);
+    console.log(req.file);
+    console.log("tempPath :" + tempPath);
+    const targetPath = path.join(__dirname, "./uploads/" + req.body.title);
     // if (path.extname(req.file.originalname).toLowerCase() === ".png"){
-   // if (path.extname(req.file.originalname).toLowerCase() === ".jpg") {
-      fs.rename(tempPath, targetPath + ".png", err => {
-        if (err) return handleError(err, res);
-        res.redirect("/imageUpload/?" + req.body.userPhoto);
-      });
+    // if (path.extname(req.file.originalname).toLowerCase() === ".jpg") {
+    fs.rename(tempPath, targetPath + ".png", err => {
+      if (err) return handleError(err, res);
+    });
     // } else {
     //   fs.unlink(tempPath, err => {
     //     if (err) return handleError(err, res);
@@ -201,7 +197,56 @@ app.post(
     //       .contentType("text/plain")
     //       .end(err);
     //   });
-    
+    var url = `https://artgallery07.herokuapp.com/uploads/${req.body.title}.png`;
+    try {
+      var wallet = req.body.artistWallet;
+      console.log(wallet);
+      var contributes = req.body.contributes; // address array -- [addr1, addr2]
+      if (contributes == undefined) {
+        var arr = [];
+        arr.push(wallet);
+        contributes = arr;
+        percentages = [];
+      } else {
+        contributes = contributes.split(",");
+        var percentages = req.body.percentages; // % array 1-10 -- [5,5]
+        percentages = percentages.split(",");
+      }
+      var constraints = req.body.constraints; // nullable string array -- ["School","Governmant","Bank"]
+      var price = req.body.price;
+      price = new BigNumber(price * 1000000000000000000);
+      var num = req.body.num;
+      var name = req.body.title;
+      var artist = req.body.artists;
+      var description = req.body.description;
+      var realart = "";
+      var thumbnail = url; // URL only
+      /**
+       *  upload File to server, generate an URL
+       **/
+      var metadata = [name, artist, description, realart, thumbnail];
+      // console.log(contributes);
+      // console.log(percentages);
+      // console.log(price.toString());
+      // console.log(metadata);
+      // console.log(num);
+
+      var transfer = await DRM.methods
+        .tokenGenerate(
+          contributes,
+          percentages,
+          constraints,
+          price.toString(),
+          metadata,
+          num //deployNum
+        )
+        .encodeABI();
+      await sendTxn(transfer);
+      res.sendStatus(200);
+    } catch (err) {
+      console.log(err);
+      res.send(err);
+    }
   }
 );
 
@@ -231,7 +276,7 @@ app.post(
  * Sign Up
  *
  */
-app.post("/sign_up", function(req, res) {
+app.post("/sign_up", async function(req, res) {
   console.log(req.body);
   var name = req.body.name;
   var email = req.body.email;
@@ -242,9 +287,12 @@ app.post("/sign_up", function(req, res) {
   var tags = req.body.tags;
   var agencies = req.body.agencies;
   var artistWallet = req.body.artistWallet;
-  axios.post(`http://localhost:8080/artistRegister/`, {
-    address: artistWallet
-  });
+
+  var transfer = await DRM.methods
+    .artistRegister(name, artistWallet)
+    .encodeABI();
+  await sendTxn(transfer);
+
   var data = {
     name: name,
     email: email,
@@ -265,7 +313,7 @@ app.post("/sign_up", function(req, res) {
         console.log(err);
       }
       console.log("Record inserted Successfully");
-      res.redirect('/');
+      res.redirect("/");
     });
     client.close();
   });
@@ -379,11 +427,6 @@ app.get("/getOnStoreTokens/", async (req, res) => {
 });
 app.post("/artistRegister/", async (req, res) => {
   try {
-    var address = req.body.address;
-    console.log(`registering artist ${address}`);
-
-    var transfer = await DRM.methods.artistRegister(address).encodeABI();
-    await sendTxn(transfer);
     res.sendStatus(200);
   } catch (err) {
     console.log(err);
@@ -408,25 +451,38 @@ app.get("/registeredArtists/", async (req, res) => {
 // @param (string[]contributes,int[]percentages,string[]constraints,int priceWei,string name,string artist,string desc,string realart, string thumbnail)
 app.post("/tokenGenerate/", async (req, res) => {
   try {
+    var wallet = req.body.artistWallet;
+    console.log(wallet);
     var contributes = req.body.contributes; // address array -- [addr1, addr2]
-    contributes = contributes.split(",");
-    var percentages = req.body.percentages; // % array 1-10 -- [5,5]
-    percentages = percentages.split(",");
+    if (contributes == undefined) {
+      var arr = [];
+      arr.push(wallet);
+      contributes = arr;
+      percentages = [];
+    } else {
+      contributes = contributes.split(",");
+      var percentages = req.body.percentages; // % array 1-10 -- [5,5]
+      percentages = percentages.split(",");
+    }
     var constraints = req.body.constraints; // nullable string array -- ["School","Governmant","Bank"]
     var price = req.body.price;
     price = new BigNumber(price * 1000000000000000000);
     var num = req.body.num;
     var name = req.body.title;
-    var artist = req.body.artist;
+    var artist = req.body.artists;
     var description = req.body.description;
     var realart = req.body.realart;
-    var thumbnail = req.body.thumbnail; // URL only
+    var thumbnail = ""; // URL only
     /**
      *  upload File to server, generate an URL
      **/
-    var deployNum = req.body.deployNum;
-    var metadata = [name, artist, "description", realart, thumbnail];
+    var metadata = [name, artist, description, realart, thumbnail];
+    console.log(contributes);
+    console.log(percentages);
+    console.log(price.toString());
     console.log(metadata);
+    console.log(num);
+
     var transfer = await DRM.methods
       .tokenGenerate(
         contributes,
@@ -462,6 +518,7 @@ async function sendTxn(transfer) {
   var tx = new Tx(rawTransaction);
   tx.sign(privKey);
   var serializedTx = tx.serialize();
+  console.log(serializedTx);
   var txn = await web3.eth.sendSignedTransaction(
     "0x" + serializedTx.toString("hex")
   );
