@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <style>
-        #fileName{ 
-            width: 100px;
-            height: 100px;
-            background-position: center center;
-            }    
-        </style>
-    </head>
+
+<head>
+  <style>
+    #fileName {
+      width: 100px;
+      height: 100px;
+      background-position: center center;
+    }
+  </style>
+</head>
 <div w3-include-html="/header_login"></div>
 <script>
   function includeHTML() {
@@ -22,10 +23,14 @@
       if (file) {
         /* Make an HTTP request using the attribute value as the file name: */
         xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
+        xhttp.onreadystatechange = function () {
           if (this.readyState == 4) {
-            if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-            if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+            if (this.status == 200) {
+              elmnt.innerHTML = this.responseText;
+            }
+            if (this.status == 404) {
+              elmnt.innerHTML = "Page not found.";
+            }
             /* Remove the attribute, and call this function once more: */
             elmnt.removeAttribute("w3-include-html");
             includeHTML();
@@ -40,9 +45,10 @@
       }
     }
   }
-  </script>
-  <!-- Sweet alert -->
+</script>
+<!-- Sweet alert -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <body>
   <div class="site-section" data-aos="fade">
     <div class="container-fluid">
@@ -58,90 +64,50 @@
             <div class="col-lg-8 mb-5">
               <!-- <h4 class="site-section-heading text-center"> Form</h4> -->
               <!-- <form action="/sign_up" method="post"> -->
-                <div class="row form-group">
-                  <div class="col-md-12">
-                    <label class="text-black" for="fname"> Name</label>
-                    <input  readonly type="text" id="name" id="name" name="name" class="form-control" required="Name is Required">
-                  </div>
+              <div class="row form-group">
+                <!-- <div class="col-md-12"> -->
+                <label type="text" id="name" name="name"></label> &nbsp;&nbsp;&nbsp;
+                - &nbsp;&nbsp;&nbsp;<label type="text" id="email" name="email" value="lala"></label>
+                <!-- </div> -->
+                <br>
+               </div>
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <textarea name="biography" id="biography" cols="30" rows="7" ></textarea>
                 </div>
+              </div>
+              <div class="row form-group">
 
-                <div class="row form-group">
-                  <div class="col-md-12">
-                    <label class="text-black" for="email"> Email</label>
-                    <input  type="email" id="email" name="email" class="form-control" value="lala">
-                  </div>
+                <div class="col-md-12">
+                  <label class="text-black" for="category">Category </label>
+                  <textarea name="category" id="category" cols="30" rows="3" class="form-control"></textarea>
                 </div>
+              </div>
 
-                <div class="row form-group">
-                  <div class="col-md-12">
-                    <label class="text-black" for="fname"> Password</label>
-                    <input disabled type="password" id="password"  id="password" class="form-control">
-                  </div>
+              <div class="row form-group">
+
+                <div class="col-md-12">
+                  <label class="text-black" for="associate_culture">Associated with any specific
+                    cultural/sexual/gender identities?</label>
+                  <textarea id="associate" name="associate" style="display: block;" id="associate_culture_textarea"
+                    cols="10" rows="7" class="form-control"></textarea>
                 </div>
+              </div>
 
-
-                <div class="row form-group">
-
-                  <div class="col-md-12">
-                    <label class="text-black" for="biography">Provide an artist biography </label>
-                    <textarea disabled name="biography" id="biography" cols="30" rows="7" class="form-control"
-                      ></textarea>
-                  </div>
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <label class="text-black" for="message">Memberships, agencies or organizations that
+                    you are working with</label>
+                  <label name="agencies" id="agencies" cols="30" rows="7" class="form-control"></textarea>
                 </div>
-                <div class="row form-group">
+              </div>
 
-                  <div class="col-md-12">
-                    <label class="text-black" for="category">Category </label>
-                    <textarea  disabled name="category" id="category" cols="30" rows="3" class="form-control"
-                     ></textarea> 
-                  </div>
+              <div class="row form-group">
+                <div class="col-md-12">
+                  Your metadask ID: <label type="text" id="metamaskId" name="metamaskId"></label>
                 </div>
+              </div>
 
-                <div class="row form-group">
-
-                  <div class="col-md-12">
-                    <label class="text-black" for="associate_culture">Do you want to associate with any specific
-                      cultural/sexual/gender identities?</label>
-                    <input  disabled type="radio" id="r1" name="associate_culture_checkbox" value="yes"
-                      onclick="associateCultureCheckbox()"> Yes
-                    <input disabled type="radio" id="r2" name="associate_culture_checkbox" checked=true value="no"
-                      onclick="associateCultureCheckbox()"> No<br>
-                    <label class="text-black" style="display: none;" id="associate_culture_textarea_label" for="associate_culture1">Please List </label>
-                    <textarea  disabled name="associate" style="display: none;" id="associate_culture_textarea" cols="30" rows="7"
-                      class="form-control" ></textarea>
-                  </div>
-                </div>
-
-                <div class="row form-group">
-                  <div class="col-md-12">
-                    <label class="text-black" for="message">If there are any memberships, agencies or organizations that
-                      you work with, please list them below</label>
-                    <textarea  disabled name="agencies" id="agencies" cols="30" rows="7" class="form-control"
-                     ></textarea>
-                  </div>
-                </div>
-               <input name="artistWallet" id="artistWallet" hidden>
-                <div class="row form-group">
-                  <div class="col-md-12">
-                    <label class="text-black" for="message"> Define potential digital tags for your online profile that
-                      can help your audiences search your digital creations up with ease and efficiency
-                    <textarea disabled   name="tags" id="tags" cols="20" rows="7" class="form-control"
-                     ></textarea>
-                  </div>
-                </div>
-                <div class="row form-group">
-                  <div class="col-md-12">
-                    
-                    <label class="text-black" for="message">Your metadask ID:</label>                     
-                    <input disabled  type="text" id="metamaskId"  name="metamaskId" class="form-control" required="MetaMask ID required "/>
-                  </div>
-                </div>
-               
-                <!-- <div class="row form-group">
-                  <div class="col-md-12">
-                    <input type="submit" value="Register"  class="btn btn-primary py-2 px-4 text-white">
-                  </div>
-                </div> -->
               </form>
             </div>
           </div>
@@ -152,22 +118,23 @@
 
   <div class="footer py-4">
     <div class="container-fluid text-center">
-        <p>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script data-cfasync="false"
-                src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-            <script>
-                document.write(new Date().getFullYear());
-            </script> All rights reserved | Made with <i class="icon-heart-o"
-                aria-hidden="true"></i> by <a href="https://www.trinitysquarevideo.com/" target="_blank">Trinity Square Video</a>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-        </p>
+      <p>
+        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+        Copyright &copy;<script data-cfasync="false"
+          src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+        <script>
+          document.write(new Date().getFullYear());
+        </script> All rights reserved | Made with <i class="icon-heart-o" aria-hidden="true"></i> by <a
+          href="https://www.trinitysquarevideo.com/" target="_blank">Trinity Square Video</a>
+        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+      </p>
     </div>
-</div>
+  </div>
   </div>
   <script>
-    function displayAlertForMetamask(){
-      swal("After Registering, please create an account on metamask", "We use ethereum and blockchain for purchasing art");
+    function displayAlertForMetamask() {
+      swal("After Registering, please create an account on metamask",
+        "We use ethereum and blockchain for purchasing art");
     }
   </script>
   <script type="module" src="../public/js/getWallet-bundle.js"></script>
@@ -186,28 +153,37 @@
 
   <script>
     function loadData() {
-        var request = new XMLHttpRequest();
-        console.log(request);
-        request.open('GET', '/user/data', true);
-        request.send();
-        request.onload = function () {
-            alert(document.getElementById("email").innerHTML);
-          console.log('Status Code: ' + request.status);
-          if (request.status >= 200 && request.status < 400) {
-            let data = JSON.parse(this.response);
-            console.log(data);
-            //alert(data.email);
-            //console.log("Response : " + this.response);
-            document.getElementById("email").innerHTML = data.email;
-          } else {
-            console.log('Api error while fetching user name');
-          }
+      var request = new XMLHttpRequest();
+      console.log(request);
+      request.open('GET', '/user/data', true);
+      request.send();
+      request.onload = function () {
+        //alert(document.getElementById("email").innerHTML);
+        console.log('Status Code: ' + request.status);
+        if (request.status >= 200 && request.status < 400) {
+          let data = JSON.parse(this.response);
+          console.log(data);
+          alert(data);
+          //console.log("Response : " + this.response);
+          document.getElementById('email').innerHTML = data.email;
+          document.getElementById("name").innerHTML = data.name;
+          document.getElementById("password").innerHTML = data.password;
+          document.getElementById("tags").innerHTML = data.tags;
+          document.getElementById("biography").innerHTML = data.biography;
+          document.getElementById("category").innerHTML = data.category;
+          document.getElementById("associate").innerHTML = data.associate_culture_checkbox:;
+          document.getElementById("agencies").innerHTML = data.agencies;
+          document.getElementById("metamaskId").innerHTML = data.metamaskId;
+        } else {
+          console.log('Api error while fetching user info');
         }
+      }
     }
   </script>
   <script>
-    includeHTML();
     loadData();
+    includeHTML();
+    
   </script>
 </body>
 

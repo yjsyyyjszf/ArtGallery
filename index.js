@@ -88,7 +88,7 @@ app.get("/", (req, res) => {
 app.get("/profile", (req, res) => {
   console.log(res.locals.userId);
   if (req.session.userId == undefined) {
-    res.sendFile(path.resolve("./public/pages/login.html"));
+    res.sendFile(path.resolve("./public/pages/profile.html"));
   } else {
     res.sendFile(path.resolve("./public/pages/profile.html"));
   }
