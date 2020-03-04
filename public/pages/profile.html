@@ -9,8 +9,9 @@
       background-position: center center;
     }
   </style>
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </head>
-<div w3-include-html="/header_login"></div>
+<div w3-include-html="/header"></div>
 <script>
   function includeHTML() {
     var z, i, elmnt, file, xhttp;
@@ -45,6 +46,46 @@
       }
     }
   }
+
+  /**
+   * 
+   * To load the profile data from database
+   * 
+   * */
+  function loadData() {
+   // alert('req');
+    var request = new XMLHttpRequest();
+    console.log("loda data");
+    request.open('GET', '/user/data', true);
+    request.send();
+    request.onload = function () {
+      //alert(document.getElementById("email").innerHTML);
+      console.log('Status Code: ' + request.status);
+      if (request.status >= 200 && request.status < 400) {
+        let data = JSON.parse(this.response);
+        console.log(data);
+       // alert(data);
+        //console.log("Response : " + this.response);
+        document.getElementById('email').innerHTML = data.email;
+        document.getElementById("name").innerHTML = data.name;
+        // document.getElementById("password").innerHTML = data.password;
+        document.getElementById("tags").innerHTML = data.tags;
+        document.getElementById("biography").innerHTML = data.biography;
+        document.getElementById("category").innerHTML = data.category;
+        document.getElementById("associate").innerHTML = data.associate_culture_checkbox;
+        document.getElementById("agencies").innerHTML = data.agencies;
+        document.getElementById("metamaskId").innerHTML = data.metamaskId;
+      } else {
+        console.log('Api error while fetching user info');
+        Swal.fire({
+                        icon: 'error',
+                        title: "<i>Please login again!</i>",
+                        html: "Error occured while fetching user info. Please login again",
+                        confirmButtonText: "Okay",
+                    });
+      }
+    }
+  }
 </script>
 <!-- Sweet alert -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -67,53 +108,63 @@
               <div class="row form-group">
                 <!-- <div class="col-md-12"> -->
                 <label type="text" id="name" name="name"></label> &nbsp;&nbsp;&nbsp;
-                - &nbsp;&nbsp;&nbsp;<label type="text" id="email" name="email" value="lala"></label>
+                - &nbsp;&nbsp;&nbsp;<label type="text" id="email" name="email"></label>
                 <!-- </div> -->
                 <br>
-               </div>
+              </div>
+
               <div class="row form-group">
                 <div class="col-md-12">
-                  <textarea name="biography" id="biography" cols="30" rows="7" ></textarea>
+                  <textarea name="biography" id="biography" type="text" cols="10" rows="7"
+                    class="form-control"></textarea>
                 </div>
               </div>
-              <div class="row form-group">
 
+              <div class="row form-group">
                 <div class="col-md-12">
                   <label class="text-black" for="category">Category </label>
-                  <textarea name="category" id="category" cols="30" rows="3" class="form-control"></textarea>
-                </div>
-              </div>
-
-              <div class="row form-group">
-
-                <div class="col-md-12">
-                  <label class="text-black" for="associate_culture">Associated with any specific
-                    cultural/sexual/gender identities?</label>
-                  <textarea id="associate" name="associate" style="display: block;" id="associate_culture_textarea"
-                    cols="10" rows="7" class="form-control"></textarea>
+                  <textarea name="category" id="category" cols="10" rows="7" class="form-control"></textarea>
                 </div>
               </div>
 
               <div class="row form-group">
                 <div class="col-md-12">
-                  <label class="text-black" for="message">Memberships, agencies or organizations that
-                    you are working with</label>
-                  <label name="agencies" id="agencies" cols="30" rows="7" class="form-control"></textarea>
+                  <label class="text-black" for="tags">Tags </label>
+                  <textarea name="tags" id="tags" cols="10" rows="7" class="form-control"></textarea>
                 </div>
               </div>
+           
+            <div class="row form-group">
 
-              <div class="row form-group">
-                <div class="col-md-12">
-                  Your metadask ID: <label type="text" id="metamaskId" name="metamaskId"></label>
-                </div>
+              <div class="col-md-12">
+                <label class="text-black" for="associate_culture">Associated with any specific
+                  cultural/sexual/gender identities?</label>
+                <textarea id="associate" name="associate" style="display: block;" id="associate_culture_textarea"
+                  cols="10" rows="7" class="form-control"></textarea>
               </div>
-
-              </form>
             </div>
+
+            <div class="row form-group">
+              <div class="col-md-12">
+                <label class="text-black" for="message">Memberships, agencies or organizations that
+                  you are working with</label>
+                <textarea name="agencies" id="agencies" cols="10" rows="4" class="form-control"></textarea>
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-md-12">
+               <label class="text-black" for="message"> Your metadask ID: </label>
+               <textarea name="metamaskId" id="metamaskId" name="metamaskId" cols="10" rows="2"  class="form-control"></textarea>
+              </div>
+            </div>
+          </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
+  </div>
   </div>
 
   <div class="footer py-4">
@@ -131,12 +182,6 @@
     </div>
   </div>
   </div>
-  <script>
-    function displayAlertForMetamask() {
-      swal("After Registering, please create an account on metamask",
-        "We use ethereum and blockchain for purchasing art");
-    }
-  </script>
   <script type="module" src="../public/js/getWallet-bundle.js"></script>
   <script src="../public/js/jquery-3.3.1.min.js"></script>
   <script src="../public/js/jquery-migrate-3.0.1.min.js"></script>
@@ -152,38 +197,8 @@
   <script src="../public/js/main.js"></script>
 
   <script>
-    function loadData() {
-      var request = new XMLHttpRequest();
-      console.log(request);
-      request.open('GET', '/user/data', true);
-      request.send();
-      request.onload = function () {
-        //alert(document.getElementById("email").innerHTML);
-        console.log('Status Code: ' + request.status);
-        if (request.status >= 200 && request.status < 400) {
-          let data = JSON.parse(this.response);
-          console.log(data);
-          alert(data);
-          //console.log("Response : " + this.response);
-          document.getElementById('email').innerHTML = data.email;
-          document.getElementById("name").innerHTML = data.name;
-          document.getElementById("password").innerHTML = data.password;
-          document.getElementById("tags").innerHTML = data.tags;
-          document.getElementById("biography").innerHTML = data.biography;
-          document.getElementById("category").innerHTML = data.category;
-          document.getElementById("associate").innerHTML = data.associate_culture_checkbox:;
-          document.getElementById("agencies").innerHTML = data.agencies;
-          document.getElementById("metamaskId").innerHTML = data.metamaskId;
-        } else {
-          console.log('Api error while fetching user info');
-        }
-      }
-    }
-  </script>
-  <script>
-    loadData();
     includeHTML();
-    
+    loadData();
   </script>
 </body>
 
