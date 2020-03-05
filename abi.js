@@ -413,6 +413,29 @@ module.exports = [
     inputs: [
       {
         name: "",
+        type: "address"
+      },
+      {
+        name: "",
+        type: "uint256"
+      }
+    ],
+    name: "artistToCreations",
+    outputs: [
+      {
+        name: "",
+        type: "uint256"
+      }
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        name: "",
         type: "uint256"
       }
     ],
@@ -540,6 +563,25 @@ module.exports = [
     constant: true,
     inputs: [],
     name: "getOnStoreTokens",
+    outputs: [
+      {
+        name: "",
+        type: "uint256[]"
+      }
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        name: "_artist",
+        type: "address"
+      }
+    ],
+    name: "getTokenByCreator",
     outputs: [
       {
         name: "",

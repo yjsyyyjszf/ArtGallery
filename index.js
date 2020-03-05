@@ -18,7 +18,7 @@ app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
 
 let web3;
-let DRM_address = "0x160db70990723b3dbdfc43828a61f68d48f2b650";
+let DRM_address = "0x3e5219f0339d43d461682feb38834005701ac6e9";
 let DRM_owner = "0x5efDD3CAb3c3Ea3D1725B8EaF340Cc8d5a9B7547";
 let DRM_ownerKey =
   "45F93E7A6CF774228519708AA97529A9CE2A663E26E67F183FE49BB9C90D468D";
@@ -102,11 +102,11 @@ app.get("/home", (req, res) => {
 });
 app.get("/index", (req, res) => {
   console.log(res.locals.userId);
-  if (req.session.userId == undefined) {
-    res.sendFile(path.resolve("./public/pages/login.html"));
-  } else {
-    res.sendFile(path.resolve("./public/pages/index.html"));
-  }
+  // if (req.session.userId == undefined) {
+  //   res.sendFile(path.resolve("./public/pages/login.html"));
+  // } else {
+  res.sendFile(path.resolve("./public/pages/index.html"));
+  // }
 });
 
 //Get - user detail for header.html
@@ -425,6 +425,19 @@ app.get("/getOnStoreTokens/", async (req, res) => {
   }
   res.send(resJson);
 });
+app.get("/getTokenByCreator/", async (req, res) => {
+  var artist = req.param("artist");
+  var storeList = await DRM.methods.getTokenByCreator(artist).call();
+  var resJson = [];
+  if (storeList.length) {
+    for (var i = 0; i < storeList.length; i++) {
+      var artwork = await DRM.methods.artworks(storeList[i]).call();
+      artwork.id = storeList[i];
+      resJson.push(artwork);
+    }
+  }
+  res.send(resJson);
+});
 app.post("/artistRegister/", async (req, res) => {
   try {
     res.sendStatus(200);
@@ -437,9 +450,12 @@ app.post("/artistRegister/", async (req, res) => {
 app.get("/registeredArtists/", async (req, res) => {
   try {
     var list = await DRM.methods.getArtist().call();
+    console.log("list" + list);
     var arr = [];
     for (var i = 0; i < list.names.length; i++) {
-      arr.push(list.names[i] + "-" + list.addresses[i]);
+      if (req.param("header") == 1) {
+        arr.push(list.names[i]);
+      } else arr.push(list.names[i] + "-" + list.addresses[i]);
     }
     // console.log(arr);
     res.send(arr);

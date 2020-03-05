@@ -1,89 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Art Gallery </title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Art Gallery</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300i,400,700" rel="stylesheet">
-    <link rel="stylesheet" href="../public/fonts/icomoon/style.css">
+    <link
+      href="https://fonts.googleapis.com/css?family=Josefin+Sans:300i,400,700"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../public/fonts/icomoon/style.css" />
 
-    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../public/css/magnific-popup.css">
-    <link rel="stylesheet" href="../public/css/jquery-ui.css">
-    <link rel="stylesheet" href="../public/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="../public/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="../public/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../public/css/magnific-popup.css" />
+    <link rel="stylesheet" href="../public/css/jquery-ui.css" />
+    <link rel="stylesheet" href="../public/css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="../public/css/owl.theme.default.min.css" />
 
-    <link rel="stylesheet" href="../public/css/lightgallery.min.css">    
-    
-    <link rel="stylesheet" href="../public/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="../public/css/lightgallery.min.css" />
 
-    <link rel="stylesheet" href="../public/fonts/flaticon/font/flaticon.css">
-    
-    <link rel="stylesheet" href="../public/css/swiper.css">
+    <link rel="stylesheet" href="../public/css/bootstrap-datepicker.css" />
 
-    <link rel="stylesheet" href="../public/css/aos.css">
+    <link rel="stylesheet" href="../public/fonts/flaticon/font/flaticon.css" />
 
-    <link rel="stylesheet" href="../public/css/style.css">
-    
+    <link rel="stylesheet" href="../public/css/swiper.css" />
+
+    <link rel="stylesheet" href="../public/css/aos.css" />
+
+    <link rel="stylesheet" href="../public/css/style.css" />
   </head>
   <body>
-  
-  <div class="site-wrap">
-
-    <div class="site-mobile-menu">
-      <div class="site-mobile-menu-header">
-        <div class="site-mobile-menu-close mt-3">
-          <span class="icon-close2 js-menu-toggle"></span>
+    <div class="site-wrap">
+      <div class="site-mobile-menu">
+        <div class="site-mobile-menu-header">
+          <div class="site-mobile-menu-close mt-3">
+            <span class="icon-close2 js-menu-toggle"></span>
+          </div>
         </div>
+        <div class="site-mobile-menu-body"></div>
       </div>
-      <div class="site-mobile-menu-body"></div>
-    </div>
-    
 
+      <header class="site-navbar py-3" role="banner">
+        <div class="container-fluid">
+          <div class="row align-items-center">
+            <div class="col-6 col-xl-2" data-aos="fade-down">
+              <h1 class="mb-0">
+                <a href="/index" class="text-black h2 mb-0">Art Gallery</a>
+              </h1>
+            </div>
+            <div class="col-10 col-md-8 d-none d-xl-block" data-aos="fade-down">
+              <nav
+                class="site-navigation position-relative text-right text-lg-center"
+                role="navigation"
+              >
+                <ul class="site-menu js-clone-nav mx-auto d-none d-lg-block">
+                  <li class="active"><a href="/index">Home</a></li>
+                  <li class="has-children">
+                    <a href="/single">Gallery</a>
+                    <ul class="dropdown" id="dropdown">
+                      <!-- <li><a href="/single">Tough Guy Mountain</a></li>
+                      <li><a href="#">Artist -1 </a></li>
+                      <li><a href="#">Artist -2 </a></li>
+                      <li><a href="#">Artist -3 </a></li>
+                      <li><a href="#">Artist -4 </a></li>
+                      <li><a href="#">Artist -5 </a></li>
+                      <li><a href="#">Artist -6 </a></li> -->
+                    </ul>
+                  </li>
+                  <li><a href="/service">Services</a></li>
+                  <li><a href="/about">About</a></li>
+                  <li><a href="/imgrecognition">Image Upload</a></li>
 
+                  <li style="display: none;">
+                    <a href="/contact">Sign Up Form</a>
+                  </li>
+                  <li class="has-children">
+                    <a><i id="profile" onload="alert('ss')">Profile</i></a>
+                    <ul class="dropdown">
+                      <li>
+                        <a href="/profile"><i id="userName">View Profile</i></a>
+                      </li>
+                      <li><a href="/logout">Logout </a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </nav>
+            </div>
 
-    <header class="site-navbar py-3" role="banner">
-      <div class="container-fluid">
-        <div class="row align-items-center">
-          
-          <div class="col-6 col-xl-2" data-aos="fade-down">
-            <h1 class="mb-0"><a href="/index" class="text-black h2 mb-0">Art Gallery</a></h1>
-          </div>
-          <div class="col-10 col-md-8 d-none d-xl-block" data-aos="fade-down">
-            <nav class="site-navigation position-relative text-right text-lg-center" role="navigation">
-
-              <ul class="site-menu js-clone-nav mx-auto d-none d-lg-block">
-                <li class="active"><a href="/index">Home</a></li>
-                <li class="has-children">
-                  <a href="/single">Gallery</a>
-                  <ul class="dropdown">
-                    <li><a href="/single">Tough Guy Mountain</a></li>
-                    <li><a href="#">Artist -1 </a></li>
-                    <li><a href="#">Artist -2 </a></li>
-                    <li><a href="#">Artist -3 </a></li>
-                    <li><a href="#">Artist -4 </a></li>
-                    <li><a href="#">Artist -5 </a></li>
-                    <li><a href="#">Artist -6 </a></li>
-                  </ul>
-                </li>
-                <li><a href="/service">Services</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/imgrecognition">Image Recognition</a></li>
-                
-                <li style="display: none;"><a href="/contact">Sign Up Form</a></li>
-                <li class="has-children">
-                  <a ><i id="profile" onload="alert('ss')">Profile</i></a>
-                  <ul class="dropdown">
-                    <li><a href="/profile"><i id="userName">View Profile</i></a></li>
-                    <li><a href="/logout">Logout </a></li>
-                  </ul>
-                </li>
-              </ul>
-            </nav>
-          </div>
-
-          <!-- <div class="col-6 col-xl-2 text-right" data-aos="fade-down">
+            <!-- <div class="col-6 col-xl-2 text-right" data-aos="fade-down">
             <div class="d-none d-xl-inline-block">
               <ul class="site-menu js-clone-nav ml-auto list-unstyled d-flex text-right mb-0" data-class="social">
                 <li>
@@ -104,53 +111,53 @@
             <div class="d-inline-block d-xl-none ml-md-0 mr-auto py-3" style="position: relative; top: 3px;"><a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
 
           </div> -->
-
+          </div>
         </div>
-      </div>
-      
-    </header>
+      </header>
+      <script type="module" src="../public/js/header-bundle.js"></script>
 
+      <script src="../public/js/jquery-3.3.1.min.js"></script>
+      <script src="../public/js/jquery-migrate-3.0.1.min.js"></script>
+      <script src="../public/js/jquery-ui.js"></script>
+      <script src="../public/js/popper.min.js"></script>
+      <script src="../public/js/bootstrap.min.js"></script>
+      <script src="../public/js/owl.carousel.min.js"></script>
+      <script src="../public/js/jquery.stellar.min.js"></script>
+      <script src="../public/js/jquery.countdown.min.js"></script>
+      <script src="../public/js/jquery.magnific-popup.min.js"></script>
+      <script src="../public/js/bootstrap-datepicker.min.js"></script>
+      <script src="../public/js/swiper.min.js"></script>
+      <script src="../public/js/aos.js"></script>
 
-    <script src="../public/js/jquery-3.3.1.min.js"></script>
-    <script src="../public/js/jquery-migrate-3.0.1.min.js"></script>
-    <script src="../public/js/jquery-ui.js"></script>
-    <script src="../public/js/popper.min.js"></script>
-    <script src="../public/js/bootstrap.min.js"></script>
-    <script src="../public/js/owl.carousel.min.js"></script>
-    <script src="../public/js/jquery.stellar.min.js"></script>
-    <script src="../public/js/jquery.countdown.min.js"></script>
-    <script src="../public/js/jquery.magnific-popup.min.js"></script>
-    <script src="../public/js/bootstrap-datepicker.min.js"></script>
-    <script src="../public/js/swiper.min.js"></script>
-    <script src="../public/js/aos.js"></script>
-  
-    <script src="../public/js/picturefill.min.js"></script>
-    <script src="../public/js/lightgallery-all.min.js"></script>
-    <script src="../public/js/jquery.mousewheel.min.js"></script>
-  
-    <script src="../public/js/main.js"></script>
-    <script type="text/javascript">
-      function getName() {
-        var request = new XMLHttpRequest();
-        console.log(request);
-        request.open('GET', '/names', true);
-        request.send();
-        request.onload = function () {
-          console.log('Status Code: ' + request.status);
-          if (request.status >= 200 && request.status < 400) {
-            let data = JSON.parse(this.response);
-            console.log(data.name);
-            //console.log("Response : " + this.response);
-            document.getElementById('userName').innerHTML = data.name;
-          } else {
-            console.log('Api error while fetching user name');
-          }
+      <script src="../public/js/picturefill.min.js"></script>
+      <script src="../public/js/lightgallery-all.min.js"></script>
+      <script src="../public/js/jquery.mousewheel.min.js"></script>
+
+      <script src="../public/js/main.js"></script>
+      <script type="text/javascript">
+        function getName() {
+          var request = new XMLHttpRequest();
+          console.log(request);
+          request.open("GET", "/names", true);
+          request.send();
+          request.onload = function() {
+            console.log("Status Code: " + request.status);
+            if (request.status >= 200 && request.status < 400) {
+              let data = JSON.parse(this.response);
+              console.log(data.name);
+              //console.log("Response : " + this.response);
+              document.getElementById("userName").innerHTML = data.name;
+            } else {
+              console.log("Api error while fetching user name");
+            }
+          };
         }
-      }
-    </script>
-    <script>
-      $(document).ready(function(){
-        $('#lightgallery').lightGallery(); 
+      </script>
+      <script>
+        $(document).ready(function() {
+          $("#lightgallery").lightGallery();
         });
-    </script>
-    
+      </script>
+    </div>
+  </body>
+</html>
