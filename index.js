@@ -86,7 +86,7 @@ app.get("/", (req, res) => {
 app.get("/profile", (req, res) => {
   console.log(res.locals.userId);
   if (req.session.userId == undefined) {
-    res.sendFile(path.resolve("./public/pages/login.html"));
+    res.sendFile(path.resolve("./public/pages/profile.html"));
   } else {
     res.sendFile(path.resolve("./public/pages/profile.html"));
   }
@@ -138,6 +138,7 @@ app.get("/user/data", (req, res) => {
           var resV = false;
           var resData;
           dbResult.forEach(user => {
+            console.log(user._id);
             if (user._id == req.session.userId) {
               resV = true;
               resData = user;
@@ -148,6 +149,7 @@ app.get("/user/data", (req, res) => {
             console.log(resData);
             res.status(200).json(resData);
           } else {
+            console.log(req.session.userId)
             res.status(400).json("oh noes!");
           }
         });
@@ -278,6 +280,7 @@ app.post(
  */
 app.post("/sign_up", async function(req, res) {
   console.log(req.body);
+  
   var name = req.body.name;
   var email = req.body.email;
   var pass = req.body.password;
@@ -287,6 +290,8 @@ app.post("/sign_up", async function(req, res) {
   var tags = req.body.tags;
   var agencies = req.body.agencies;
   var artistWallet = req.body.artistWallet;
+  var metamaskId = req.body.metamaskId;
+  var category=req.body.category;
 
   var transfer = await DRM.methods
     .artistRegister(name, artistWallet)
@@ -298,10 +303,12 @@ app.post("/sign_up", async function(req, res) {
     email: email,
     password: pass,
     biography: biography,
+    category : category,
     associate: associate,
     associate_culture_checkbox: associate_culture_checkbox,
     tags: tags,
-    agencies: agencies
+    agencies: agencies,
+    metamaskId : metamaskId
   };
   MongoClient.connect(uri, function(err, client) {
     assert.equal(null, err);
