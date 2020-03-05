@@ -17,31 +17,21 @@ function buy(input) {
   console.log(input);
 }
 axios
-  .get(`http://localhost:8080/getOnStoreTokens/`)
+  .get(`/getOnStoreTokens/`)
   .then(res => {
     // res.data
     var tableStr = "";
     console.log(res);
     for (var i = 0; i < res.data.length; i++) {
-      tableStr +=
-        "<tr><td>" +
-        res.data[i][0] +
-        "<br>" +
-        res.data[i][1] +
-        "<br>" +
-        res.data[i][2] +
-        "<br>" +
-        res.data[i][3] +
-        "<br>" +
-        "<img src='" +
-        res.data[i][4] +
-        "'><br>" +
-        "<button type='button' onclick='" +
-        i +
-        ")'>" +
-        "Buy!" +
-        "</button>" +
-        "</td></tr>";
+      tableStr += `<div class="swiper-slide">
+        <div class="image-wrap">
+          <div class="image-info">
+            <h2 class="mb-3" id="artist">${res.data[i].artist}</h2>
+            <a href="/single/?artist=${res.data[i].artist}" id="thumbnail" class="btn btn-outline-white py-2 px-4">More Photos</a>
+          </div>
+          <img src="${res.data[i].thumbnail}" alt="Image">
+        </div>
+      </div>`;
     }
 
     document.getElementById("shop").innerHTML = tableStr;
