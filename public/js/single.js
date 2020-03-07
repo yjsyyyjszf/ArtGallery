@@ -5,7 +5,10 @@ var sPageURL = window.location.href;
 var sURLVariables = sPageURL.split("=");
 console.log(sURLVariables);
 var div = document.getElementById("artistName");
-div.innerHTML = `Artist - ${sURLVariables[1]}`;
+var artistName = sURLVariables[1].split("%20");
+var artStr="";
+for(var i=0;i<artistName.length;i++)artStr+=artistName[i]+" ";
+div.innerHTML = `Artist - ${artStr}`;
 
 axios
   .get(`/getTokenByCreator/?artist=${sURLVariables[1]}`)

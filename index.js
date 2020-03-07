@@ -18,7 +18,7 @@ app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
 
 let web3;
-let DRM_address = "0x3e5219f0339d43d461682feb38834005701ac6e9";
+let DRM_address = "0xdea1bdca2d90296face99266ca431920bed90d39";
 let DRM_owner = "0x5efDD3CAb3c3Ea3D1725B8EaF340Cc8d5a9B7547";
 let DRM_ownerKey =
   "45F93E7A6CF774228519708AA97529A9CE2A663E26E67F183FE49BB9C90D468D";
@@ -199,7 +199,8 @@ app.post(
     //       .contentType("text/plain")
     //       .end(err);
     //   });
-    var url = `https://artgallery07.herokuapp.com/uploads/${req.body.title}.png`;
+    // var url = `https://artgallery07.herokuapp.com/uploads/${req.body.title}.png`;
+    var url = `http://localhost:3000/uploads/${req.body.title}.png`;
     try {
       var wallet = req.body.artistWallet;
       console.log(wallet);
@@ -244,7 +245,7 @@ app.post(
         )
         .encodeABI();
       await sendTxn(transfer);
-      res.sendStatus(200);
+      res.redirect('/index');
     } catch (err) {
       console.log(err);
       res.send(err);

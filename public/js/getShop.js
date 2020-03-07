@@ -33,7 +33,7 @@ axios
         </div>
       </div>`;
     }
-
+    console.log(tableStr);
     document.getElementById("shop").innerHTML = tableStr;
   })
   .catch(err => alert(err));
