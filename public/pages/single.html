@@ -107,19 +107,17 @@
   <script src="../public/js/picturefill.min.js"></script>
   <script src="../public/js/lightgallery-all.min.js"></script>
   <script src="../public/js/jquery.mousewheel.min.js"></script>
-
   <script src="../public/js/main.js"></script>
   
   <script>
     $(document).ready(function(){
-      $('#lightgallery').lightGallery();
- 
-
-    
+      $('#lightgallery').lightGallery();   
+      $('.img-fluid').click(function(){
+        alert('hey');
+      });
     });
   </script>
     <script type="module" src="../public/js/single-bundle.js"></script>
-
   <script>
     includeHTML();
     </script>

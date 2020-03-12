@@ -39,6 +39,7 @@ axios
       newDiv.appendChild(newA);
       var newBtn = document.createElement("button");
       newBtn.innerHTML = "Buy";
+     
       newBtn.setAttribute("value", `${res.data[i].id}`);
       newBtn.onclick = e => {
         window.web3 = new Web3(window.ethereum);

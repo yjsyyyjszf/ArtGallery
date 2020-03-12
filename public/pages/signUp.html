@@ -55,7 +55,51 @@
           </div>
 
           <div class="row">
-            <div class="col-lg-8 mb-5">
+            <label class="text-black" for="accType"> Please select account type:
+            Are you  <b>Artist</b> or <b>Buyer</b>? </label>
+            <br/>
+            <div class="col-md-12">
+            <input type="radio" id="r3" name="associate_culture_checkbox" value="artist"
+            onclick="associateCultureCheckbox()"> Artist
+          <input type="radio" id="r4" name="associate_culture_checkbox"  value="buyer"
+            onclick="associateCultureCheckbox()"> Buyer<br>
+            </div>
+          </div>
+            <div class="col-lg-8 mb-5" style="display: none;" id="buyer">
+              <!-- <h4 class="site-section-heading text-center"> Form</h4> -->
+              <form action="/sign_up" method="post">
+                <div class="row form-group">
+                  <div class="col-md-12">
+                    <label class="text-black" for="fname"> Name</label>
+                    <input type="text" id="name" name="name" class="form-control" required="Name is Required">
+                  </div>
+                </div>
+
+                <div class="row form-group">
+                  <div class="col-md-12">
+                    <label class="text-black" for="email"> Email</label>
+                    <input type="email" id="email" name="email" class="form-control" required="Email is Required">
+                  </div>
+                </div>
+
+                <div class="row form-group">
+                  <div class="col-md-12">
+                    <label class="text-black" for="fname"> Password</label>
+                    <input type="password" id="password"  name="password" required="" class="form-control">
+                  </div>
+                </div>
+
+
+                
+                <div class="row form-group">
+                  <div class="col-md-12">
+                    <input type="submit" value="Register"  class="btn btn-primary py-2 px-4 text-white">
+                  </div>
+                </div>
+              </form>
+            </div>
+            <!--  For Artist Sign up Form -->
+            <div class="col-lg-8 mb-5" style="display: none;" id="artist">
               <!-- <h4 class="site-section-heading text-center"> Form</h4> -->
               <form action="/sign_up" method="post">
                 <div class="row form-group">
@@ -240,13 +284,26 @@
       } else {
         value = document.getElementById('r2').value;
       }
+
+      if (document.getElementById('r3').checked) {
+        value = document.getElementById('r3').value;
+      } else {
+        value = document.getElementById('r4').value;
+      }
       console.log(value);
       if(value=='yes'){
           document.getElementById('associate_culture_textarea_label').style.display='block';
           document.getElementById('associate_culture_textarea').style.display='block';
-      }else{
+      }else if (value=='no'){
         document.getElementById('associate_culture_textarea_label').style.display='none';
         document.getElementById('associate_culture_textarea').style.display='none';
+      }
+      else if(value=='artist'){
+        document.getElementById('artist').style.display='block';
+        document.getElementById('buyer').style.display='none';
+      }else {
+        document.getElementById('artist').style.display='none';
+        document.getElementById('buyer').style.display='block';
       }
     }
 
