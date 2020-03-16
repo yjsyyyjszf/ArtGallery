@@ -18,7 +18,7 @@ app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
 
 let web3;
-let DRM_address = "0xdea1bdca2d90296face99266ca431920bed90d39";
+let DRM_address = "0x5268397ad2dc0a1ef5c1fbe3e6bfc239c4ac20fd";
 let DRM_owner = "0x5efDD3CAb3c3Ea3D1725B8EaF340Cc8d5a9B7547";
 let DRM_ownerKey =
   "45F93E7A6CF774228519708AA97529A9CE2A663E26E67F183FE49BB9C90D468D";
@@ -245,7 +245,7 @@ app.post(
         )
         .encodeABI();
       await sendTxn(transfer);
-      res.redirect('/index');
+      res.redirect("/index");
     } catch (err) {
       console.log(err);
       res.send(err);
@@ -427,34 +427,32 @@ app.get("/getOnStoreTokens/", async (req, res) => {
   if (storeList.length) {
     for (var i = 0; i < storeList.length; i++) {
       var artwork = await DRM.methods.artworks(storeList[i]).call();
+      var owner = await DRM.methods.tokenToArtists(storeList[i], 0).call();
       artwork.id = storeList[i];
+      artwork.owner = owner;
       resJson.push(artwork);
     }
   }
   res.send(resJson);
 });
+console.log("bb");
 app.get("/getTokenByCreator/", async (req, res) => {
-  var artists = await DRM.methods.getArtist().call();
-  for (var i = 0; i < artists.names.length; i++) {
-    console.log("blockchain=>" + artists.addresses[i]);
-    if (req.param("artist") == artists.names[i]) {
-      var storeList = await DRM.methods
-        .getTokenByCreator(artists.addresses[i])
-        .call();
-      console.log(storeList);
-      var resJson = [];
-      if (storeList.length) {
-        for (var i = 0; i < storeList.length; i++) {
-          var artwork = await DRM.methods.artworks(storeList[i]).call();
-          artwork.id = storeList[i];
-          resJson.push(artwork);
-        }
-      }
-      res.send(resJson);
-      return;
+  console.log("aa");
+  console.log(req.param("artist"));
+  var storeList = await DRM.methods
+    .getTokenByCreator(req.param("artist"))
+    .call();
+  console.log(storeList);
+  var resJson = [];
+  if (storeList.length) {
+    for (var i = 0; i < storeList.length; i++) {
+      var artwork = await DRM.methods.artworks(storeList[i]).call();
+      artwork.id = storeList[i];
+      resJson.push(artwork);
     }
   }
-  res.send("Not Found");
+  res.send(resJson);
+  return;
 });
 app.post("/artistRegister/", async (req, res) => {
   try {

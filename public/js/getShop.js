@@ -27,7 +27,7 @@ axios
         <div class="image-wrap">
           <div class="image-info">
             <h2 class="mb-3" id="artist">${res.data[i].artist}</h2>
-            <a href="/single/?artist=${res.data[i].artist}" id="thumbnail" class="btn btn-outline-white py-2 px-4">More Photos</a>
+            <a href="/single/?artist=${res.data[i].owner}" id="thumbnail" class="btn btn-outline-white py-2 px-4">More Photos</a>
           </div>
           <img src="${res.data[i].thumbnail}" alt="Image">
         </div>
