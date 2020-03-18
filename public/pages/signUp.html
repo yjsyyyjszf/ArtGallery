@@ -81,7 +81,7 @@
                     <input type="email" id="email" name="email" class="form-control" required="Email is Required">
                   </div>
                 </div>
-                <input name="artistWallet" id="artistWallet2" hidden>
+
                 <div class="row form-group">
                   <div class="col-md-12">
                     <label class="text-black" for="fname"> Password</label>
@@ -284,13 +284,26 @@
       } else {
         value = document.getElementById('r2').value;
       }
+
+      if (document.getElementById('r3').checked) {
+        value = document.getElementById('r3').value;
+      } else {
+        value = document.getElementById('r4').value;
+      }
       console.log(value);
       if(value=='yes'){
           document.getElementById('associate_culture_textarea_label').style.display='block';
           document.getElementById('associate_culture_textarea').style.display='block';
-      }else{
+      }else if (value=='no'){
         document.getElementById('associate_culture_textarea_label').style.display='none';
         document.getElementById('associate_culture_textarea').style.display='none';
+      }
+      else if(value=='artist'){
+        document.getElementById('artist').style.display='block';
+        document.getElementById('buyer').style.display='none';
+      }else {
+        document.getElementById('artist').style.display='none';
+        document.getElementById('buyer').style.display='block';
       }
     }
 

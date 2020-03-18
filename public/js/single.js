@@ -12,7 +12,7 @@ var div = document.getElementById("artistName");
 window.web3 = new Web3(window.ethereum);
 const DRM = new window.web3.eth.Contract(
   abi,
-  "0x5268397ad2dc0a1ef5c1fbe3e6bfc239c4ac20fd"
+  "0xe98b38747c548d3d76f7bd2989d9f093dd322101"
 );
 getName(DRM, sURLVariables[1]);
 async function getName(DRM, wallet) {
@@ -54,26 +54,38 @@ axios
       newBtn.innerHTML = "Buy";
 
       newBtn.setAttribute("value", `${res.data[i].id}`);
-      newBtn.onclick = e => {
+      newBtn.onclick = async e => {
+        var unit = await axios.get(
+          "https://api.etherscan.io/api?module=stats&action=ethprice&apikey=IKKPZRZQD3FJ88KSBBQFT4Q7Z9Q8ME6UHC"
+        );
+        unit = unit.data.result.ethusd;
         window.web3 = new Web3(window.ethereum);
         const DRM = new window.web3.eth.Contract(
           abi,
-          "0x5268397ad2dc0a1ef5c1fbe3e6bfc239c4ac20fd"
+          "0xe98b38747c548d3d76f7bd2989d9f093dd322101"
         );
         let id = e.target.value;
-        window.ethereum
-          .enable()
-          .then(async res => {
-            var price = await DRM.methods.tokenPrices(id).call();
-            console.log(price);
-            DRM.methods.requestBuy(id).send({
-              from: res[0],
-              gas: "480000",
-              value: price,
-              gasPrice: web3.utils.toWei("20", "gwei")
-            });
-          })
-          .catch(err => null);
+        var price = await DRM.methods.tokenPrices(id).call();
+
+        if (
+          confirm(
+            "Token price is..." + unit * price * 0.000000000000000001 + " USD"
+          )
+        ) {
+          window.ethereum
+            .enable()
+            .then(async res => {
+              var price = await DRM.methods.tokenPrices(id).call();
+              console.log(price);
+              DRM.methods.requestBuy(id).send({
+                from: res[0],
+                gas: "480000",
+                value: price,
+                gasPrice: web3.utils.toWei("20", "gwei")
+              });
+            })
+            .catch(err => null);
+        }
       };
       newDiv.appendChild(newBtn);
       //   str += `<div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 item" data-aos="fade" data-src="${res.data[i].thumbnail}"
