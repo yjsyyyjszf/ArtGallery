@@ -1,5 +1,6 @@
 const Web3 = require("web3");
 const axios = require("axios");
+
 $(document).ready(() => {
   axios
     .get(`/registeredArtists/?header=1`)
@@ -15,7 +16,7 @@ $(document).ready(() => {
         x.append(document.getElementById("test"));
         var dropdown = document.getElementById("dropdownlist");
         dropdown.appendChild(x);
-        console.log(dropdown);
+        // console.log(dropdown);
         // str += `<div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 item" data-aos="fade" data-src="${res.data[i].thumbnail}" data-sub-html="<h4>Fading Light</h4><p>Tough guy Mountain</p>"><a href="#">
         // <img src="${res.data[i].thumbnail}" alt="IMage" class="img-fluid"></a></div>`;
       }

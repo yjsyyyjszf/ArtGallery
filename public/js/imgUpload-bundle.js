@@ -49603,10 +49603,17 @@ window.ethereum
   .catch(err => null);
 // axios2.defaults.headers.common["x-api-key"] =
 //   "jReCGk34kJ6TdpxQ1tsWf3H3bUUaOpXW2kO8sZUI";
-axios2.get("https://api.coinmarketcap.com/v1/ticker/ethereum/").then(res => {
-  console.log(res.data[0].price_usd);
-  document.getElementById("unit").value = res.data[0].price_usd;
-});
+axios2
+  .get(
+    "https://api.etherscan.io/api?module=stats&action=ethprice&apikey=IKKPZRZQD3FJ88KSBBQFT4Q7Z9Q8ME6UHC"
+  )
+  .then(res => {
+    console.log(res);
+    console.log(`res`);
+    console.log(res.result);
+    console.log(res.data.result.ethusd);
+    document.getElementById("unit").value = res.data.result.ethusd;
+  });
 
 axios
   .get(`/registeredArtists/`)
