@@ -293,11 +293,12 @@ app.post("/sign_up", async function(req, res) {
   var artistWallet = req.body.artistWallet;
   var metamaskId = req.body.metamaskId;
   var category = req.body.category;
-
-  var transfer = await DRM.methods
-    .artistRegister(name, artistWallet)
-    .encodeABI();
-  await sendTxn(transfer);
+  if (artistWallet != null) {
+    var transfer = await DRM.methods
+      .artistRegister(name, artistWallet)
+      .encodeABI();
+    await sendTxn(transfer);
+  }
 
   var data = {
     name: name,
