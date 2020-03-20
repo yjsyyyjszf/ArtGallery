@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "10.15.3"
+  },
   "dependencies": {
     "@google-cloud/vision": "^1.7.2",
     "assert": "^2.0.0",

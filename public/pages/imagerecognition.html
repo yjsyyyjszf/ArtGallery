@@ -1,39 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <style>
-        #fileName{ 
-            width: 100px;
-            height: 100px;
-            background-position: center center;
-            }    
-        </style>
-        <style>
-          .tooltip2 {
-            position: relative;
-            display: inline-block;
-            border-bottom: 1px dotted black;
-          }
-          
-          .tooltip2 .tooltiptext2 {
-            visibility: hidden;
-            width: 300px;
-            background-color: black;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 0;
-          
-            /* Position the tooltip */
-            position: absolute;
-            z-index: 1;
-          }
-          
-          .tooltip2:hover .tooltiptext2 {
-            visibility: visible;
-          }
-          </style>
-    </head>
+
+<head>
+  <style>
+    #fileName {
+      width: 100px;
+      height: 100px;
+      background-position: center center;
+    }
+  </style>
+  <style>
+    .tooltip2 {
+      position: relative;
+      display: inline-block;
+      border-bottom: 1px dotted black;
+    }
+
+    .tooltip2 .tooltiptext2 {
+      visibility: hidden;
+      width: 300px;
+      background-color: black;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px 0;
+
+      /* Position the tooltip */
+      position: absolute;
+      z-index: 1;
+    }
+
+    .tooltip2:hover .tooltiptext2 {
+      visibility: visible;
+    }
+  </style>
+</head>
 <div w3-include-html="/header"></div>
 <script>
   function includeHTML() {
@@ -47,10 +48,14 @@
       if (file) {
         /* Make an HTTP request using the attribute value as the file name: */
         xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
+        xhttp.onreadystatechange = function () {
           if (this.readyState == 4) {
-            if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-            if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+            if (this.status == 200) {
+              elmnt.innerHTML = this.responseText;
+            }
+            if (this.status == 404) {
+              elmnt.innerHTML = "Page not found.";
+            }
             /* Remove the attribute, and call this function once more: */
             elmnt.removeAttribute("w3-include-html");
             includeHTML();
@@ -63,7 +68,7 @@
       }
     }
   }
-  </script>
+</script>
 
 <body>
 
@@ -71,7 +76,7 @@
 
   <div class="site-section" data-aos="fade">
     <div class="container-fluid">
-      
+
       <div class="row justify-content-center">
         <div class="col-md-7">
           <div class="row mb-5">
@@ -83,203 +88,95 @@
           <div class="row">
             <div class="col-lg-8 mb-5">
               <!-- <form action="/api/photos" method="POST"> -->
-                <form action="/upload" method="POST" enctype='multipart/form-data'>
-               
-                <!-- <div class="row form-group">
-                  <div class="col-md-6 mb-3 mb-md-0">
-                    <label class="text-black" for="fname">First Name</label>
-                    <input type="text" id="fname" class="form-control">
-                  </div>-->
-                  
-                 
+              <form action="/uploads" method="POST" enctype='multipart/form-data'>
                 <p>Click on Upload image to performe Image Recognition</p>
-    <p id="myPic">
-      <input type="file" accept="image/*" name="userPhoto"  class="img-rounded" 
-        id="fileName" class="col-lg-8 align-self-baseline"
-            onchange="loadFile(event)" style="display: none;"></p>
-    <h1><label for="fileName" style="cursor: pointer;">Upload Image</label></h1>
-    <p><img id="output" class="figure" /></p>
+                <p id="myPic">
+                  <input type="file" accept="image/*" name="userPhoto" class="img-rounded" id="fileName"
+                    class="col-lg-8 align-self-baseline" onchange="loadFile(event)" style="display: none;"></p>
+                <h1><label for="fileName" style="cursor: pointer;">Upload Image</label></h1>
+                <p><img id="output" class="figure" /></p>
 
-    <br>
-    <div class="row form-group">
-      <div class="col-md-12">
-        <label class="text-black" for="message">Tags</label> 
-        <textarea name="message" id="displayResult" cols="30" rows="7" class="form-control" placeholder="Tags will be gnerated once you upload the picture"></textarea>
-      </div>
-    </div>
-    <!-- Hides all the child element until user uploads photo -->
-    <div id="submit"  style="display: none;"> 
-    <div class="row form-group">
-      <div class="col-md-12">
-        <label class="text-black" for="message">Please state your artist name(s) for this artwork.</label> 
-        <input type="text" id="artists" name="artists" class="form-control">
-      </div>
-    </div>
-    <span id="unit" hidden></span>
-    <div class="row form-group">
-      <div class="col-md-12">
-        <label class="text-black" for="message">What is the title of your art piece?</label> 
-        <input type="text"  id="title" name="title" class="form-control">
-      </div>
-    </div>
-    <div class="col-md-12">
-      <input type="text" name="artistWallet" id="artistWallet" hidden/>
-      Contributor addresses<div class="tooltip2">(?)
-        <span class="tooltiptext2">If there's more than 1 artist work on this artwok, please select the num below(include yourself)
-        </span>
-      </div> 
-      <select name="contributors" id="contributors" class="form-control" multiple>
-      </select>
-    </div>
-    <div class="row form-group">
-      <div class="col-md-12">
-        Percentages <div class="tooltip2">(?)
-          <span class="tooltiptext2">If there's multiple artist on this artwork, please indicate how many percentage(1-9) they will get as their profit once token sold. 
-          </span>
-        </div> 
-        <div id="percentages"></div>
-      </div>
-    </div>
-    <div class="row form-group">
-      <div class="col-md-12">
-        Constraints<div class="tooltip2">(?)
-          <span class="tooltiptext2">Setup "white-list" to restraint the user who has ability to access this artwork; You can simply type "school" that only allows school group to use this art. You can even type multi constraint by comma. ex: school,government</span>
-        </div> 
-        <input type="text" name="constraints" class="form-control">
-      </div>
-    </div>
-    <div class="row form-group">
-      <div class="col-md-12">
-        <label class="text-black" for="message">What is the original date of creation?</label> 
-        <input data-provide="datepicker" class="form-control">
-        
-      </div>
-    </div>
-    <div class="row form-group">
-      <div class="col-md-12">
-        <label class="text-black" for="message">Provide us with a description/artist statement of your artwork</label> 
-        <input type="text" id="description" name="description" class="form-control">  
-      </div>
-    </div>
-    <div class="row form-group">
-      <div class="col-md-12">
-        <label class="text-black" for="message">(if applicable) provide a URL link to an online description/preview of it.</label> 
-        <input type="text" id="fname" class="form-control">  
-      </div>
-    </div>
-    <div class="row form-group">
-      <div class="col-md-12">
-        <label class="text-black" for="message"> What are the file types you are uploading into this artwork?</label> 
-        <input type="text" id="fname" class="form-control">  
-      </div>
-    </div>
+                <br>
+                <button type="submit" id="imgSubmit" style="display: none;" class="btn btn-primary mb-2" onclick="saveImageToServer()">Next</button>
+              </form>
 
-    <div class="row form-group">
-      <div class="col-md-12">
-        <label class="text-black" for="message"> If any, what non-digital aspects are included in this work? </label> 
-        <input type="text" id="fname" placeholder="e.g. physical installation, instructions, 2D or 3D works etc." class="form-control">  
-      </div>
-    </div>
-    <div class="row form-group">
-      <div class="col-md-12">
-        <label class="text-black" for="price">Token Number</label> 
-        <input type="number" name="num" class="form-control">  
-        <label class="text-black" for="price">Price(ETH) ~= <span id="priceUSD"></span> USD</label> 
-        <input id="price" type="number" name="price" class="form-control" step="0.001" onchange="unit()">
-      </div>
-    </div>
-    <div class="row form-group">
-      <div class="col-md-12">
-        <label class="text-black" for="message">Is this work a specific version/iteration or part of a series?  </label> 
-        <textarea name="message" id="displayResult" cols="30" rows="7" class="form-control" placeholder="If so, please specify and make the connection to previously uploaded works."></textarea>
-      </div>
-    </div>
+              <script>
+                var loadFile = function (event) {
+                  var image = document.getElementById('output'); 
+                  image.src = URL.createObjectURL(event.target.files[0]);
+                  document.getElementById("imgSubmit").style.display = "inline";
+                  
+                };
+              </script>
+              <script>
+                function saveImageToServer() {
+                //  getResult();
+                  var btn = document.getElementById('submit');
+                  btn.style.display = "inline";
+                  document.getElementById("displayResultLabel").style.display = "inline";
+                }
 
-    <div class="row form-group">
-      <div class="col-md-12">
-        <label class="text-black" for="message">
-          Do you consider this work to be culturally specific or traditional? </label> 
-        <input type="text" id="fname" placeholder="e.g. physical installation, instructions, 2D or 3D works etc." class="form-control">  
-      </div>
-    </div>
-    
-    
-    <!-- <input type="text" class="form-control mb-2 mr-sm-2" id="displayResult" style="font-weight: bold;color: darkblue;"/> -->
-    <button type="submit" class="btn btn-primary mb-2">Submit</button>
-    </div>
-    </form>
-    </div>
-  </form>
-    <script>
-        var loadFile = function (event) {
-            var image = document.getElementById('output');
-            var btn=document.getElementById('submit');
-            image.src = URL.createObjectURL(event.target.files[0]);
-            getResult();
-            btn.style.display="inline";
-        };
-    </script>
-    <script>
-        function getResult() {
-            getResultFromGoogleVision();
-        }
+                function getResult() {
+                  getResultFromGoogleVision();
+                }
 
-    
-            function getResultFromGoogleVision() {
-                let data = null;
-                var request = new XMLHttpRequest();
-                var file_name = document.getElementById("fileName").files[0].name;
-                console.log(file_name);
 
-                var url = "/api/imagerecognition?file=" + file_name;
-                request.open('GET', url, true);
-                request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-                request.send();
-                request.onload = function () {
+                function getResultFromGoogleVision() {
+                  let data = null;
+                  var request = new XMLHttpRequest();
+                  var file_name = document.getElementById("fileName").files[0].name;
+                  console.log(file_name);
+
+                  var url = "/api/imagerecognition?file=" + file_name;
+                  request.open('GET', url, true);
+                  request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                  request.send();
+                  request.onload = function () {
                     console.log('Status Code: ' + request.status);
                     if (request.status >= 200 && request.status <= 400) {
-                        //console.log(response)
-                        data = JSON.parse((this.response).toString());
-                        console.log(data);
-                        var result = "";
-                        data.forEach(myFunction);
-                        document.getElementById("displayResult").value = result;
-                        function myFunction(item) {
-                            result += " #"+item.description  ;
-                        }
+                      //console.log(response)
+                      data = JSON.parse((this.response).toString());
+                      console.log(data);
+                      var result = "";
+                      data.forEach(myFunction);
+                      document.getElementById("displayResult").value = result;
+
+                      function myFunction(item) {
+                        result += " #" + item.description;
+                      }
                     }
+                  }
                 }
-            }
-    </script>
-             
-    
+              </script>
+
+
               </form>
             </div>
+          </div>
+
         </div>
-    
-      </div> 
+      </div>
     </div>
-  </div>
 
-  <div class="footer py-4">
-    <div class="container-fluid text-center">
+    <div class="footer py-4">
+      <div class="container-fluid text-center">
         <p>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script data-cfasync="false"
-                src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-            <script>
-                document.write(new Date().getFullYear());
-            </script> All rights reserved | Made with <i class="icon-heart-o"
-                aria-hidden="true"></i> by <a href="https://www.trinitysquarevideo.com/" target="_blank">Trinity Square Video</a>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+          Copyright &copy;<script data-cfasync="false"
+            src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+          <script>
+            document.write(new Date().getFullYear());
+          </script> All rights reserved | Made with <i class="icon-heart-o" aria-hidden="true"></i> by <a
+            href="https://www.trinitysquarevideo.com/" target="_blank">Trinity Square Video</a>
+          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
         </p>
+      </div>
     </div>
-</div>
 
-    
 
-    
-    
+
+
+
   </div>
   <script type="module" src="../public/js/imgUpload-bundle.js"></script>
   <script src="../public/js/jquery-3.3.1.min.js"></script>
@@ -300,22 +197,24 @@
   <script src="../public/js/jquery.mousewheel.min.js"></script>
 
   <script src="../public/js/main.js"></script>
-  
+
   <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
       $('#lightgallery').lightGallery();
     });
-    function unit(){
-          var unit = document.getElementById("unit").value;
-          console.log(unit);
-          var price = document.getElementById("price").value;
-          document.getElementById("priceUSD").innerHTML = unit * price;
-          
-        }
-  </script>
-      <script>
-        includeHTML();
-        </script>
 
-  </body>
+    function unit() {
+      var unit = document.getElementById("unit").value;
+      console.log(unit);
+      var price = document.getElementById("price").value;
+      document.getElementById("priceUSD").innerHTML = unit * price;
+
+    }
+  </script>
+  <script>
+    includeHTML();
+  </script>
+
+</body>
+
 </html>

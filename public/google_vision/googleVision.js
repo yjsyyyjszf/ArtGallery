@@ -8,7 +8,7 @@ async function getLabels(imagefileName) {
          keyFilename:'./public/google_vision/mayorWilson.json'
      });
      // Performs label detection on the image file
-     const [result] = await client.labelDetection('./public/resources/'+imagefileName);
+     const [result] = await client.labelDetection('./uploads/'+imagefileName);
      const labels = result.labelAnnotations;
      console.log('Labels:');
      //labels.forEach(label => console.log(label.description));

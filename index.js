@@ -177,6 +177,24 @@ const upload = multer({
 });
 
 app.post(
+  "/uploads",
+  upload.single(
+    "userPhoto" /* name attribute of <file> element in your form */
+  ),
+  async (req, res) => {
+    const tempPath = req.file.path;
+    console.log(req.file);
+    console.log("tempPath :" + tempPath);
+    const targetPath = path.join(__dirname, "./uploads/" + req.file.originalname);
+    // if (path.extname(req.file.originalname).toLowerCase() === ".png"){
+    // if (path.extname(req.file.originalname).toLowerCase() === ".jpg") {
+    fs.rename(tempPath, targetPath , err => {
+      if (err) return handleError(err, res);
+      else
+        return  res.sendFile(path.resolve("./public/pages/imagerecognition-I.html"));
+    });
+  });
+app.post(
   "/upload",
   upload.single(
     "userPhoto" /* name attribute of <file> element in your form */
@@ -185,71 +203,65 @@ app.post(
     const tempPath = req.file.path;
     console.log(req.file);
     console.log("tempPath :" + tempPath);
-    const targetPath = path.join(__dirname, "./uploads/" + req.body.title);
+    const targetPath = path.join(__dirname, "./uploads/" + req.file.originalname);
     // if (path.extname(req.file.originalname).toLowerCase() === ".png"){
     // if (path.extname(req.file.originalname).toLowerCase() === ".jpg") {
-    fs.rename(tempPath, targetPath + ".png", err => {
+    fs.rename(tempPath, targetPath , err => {
       if (err) return handleError(err, res);
+      else
+        return res.status(200);
     });
-    // } else {
-    //   fs.unlink(tempPath, err => {
-    //     if (err) return handleError(err, res);
-    //     res
-    //       .status(403)
-    //       .contentType("text/plain")
-    //       .end(err);
-    //   });
-    // var url = `https://artgallery07.herokuapp.com/uploads/${req.body.title}.png`;
-    var url = `http://localhost:3000/uploads/${req.body.title}.png`;
-    try {
-      var wallet = req.body.artistWallet;
-      console.log(wallet);
-      var contributes = req.body.contributes; // address array -- [addr1, addr2]
-      if (contributes == undefined) {
-        var arr = [];
-        arr.push(wallet);
-        contributes = arr;
-        percentages = [];
-      } else {
-        contributes = contributes.split(",");
-        var percentages = req.body.percentages; // % array 1-10 -- [5,5]
-        percentages = percentages.split(",");
-      }
-      var constraints = req.body.constraints; // nullable string array -- ["School","Governmant","Bank"]
-      var price = req.body.price;
-      price = new BigNumber(price * 1000000000000000000);
-      var num = req.body.num;
-      var name = req.body.title;
-      var artist = req.body.artists;
-      var description = req.body.description;
-      var realart = "";
-      var thumbnail = url; // URL only
-      /**
-       *  upload File to server, generate an URL
-       **/
-      var metadata = [name, artist, description, realart, thumbnail];
-      // console.log(contributes);
-      // console.log(percentages);
-      // console.log(price.toString());
-      // console.log(metadata);
-      // console.log(num);
+    
+    // var url = `http://localhost:3000/uploads/${req.body.title}.png`;
+    // try {
+    //   var wallet = req.body.artistWallet;
+    //   console.log(wallet);
+    //   var contributes = req.body.contributes; // address array -- [addr1, addr2]
+    //   if (contributes == undefined) {
+    //     var arr = [];
+    //     arr.push(wallet);
+    //     contributes = arr;
+    //     percentages = [];
+    //   } else {
+    //     contributes = contributes.split(",");
+    //     var percentages = req.body.percentages; // % array 1-10 -- [5,5]
+    //     percentages = percentages.split(",");
+    //   }
+    //   var constraints = req.body.constraints; // nullable string array -- ["School","Governmant","Bank"]
+    //   var price = req.body.price;
+    //   price = new BigNumber(price * 1000000000000000000);
+    //   var num = req.body.num;
+    //   var name = req.body.title;
+    //   var artist = req.body.artists;
+    //   var description = req.body.description;
+    //   var realart = "";
+    //   var thumbnail = url; // URL only
+    //   /**
+    //    *  upload File to server, generate an URL
+    //    **/
+    //   var metadata = [name, artist, description, realart, thumbnail];
+    //   // console.log(contributes);
+    //   // console.log(percentages);
+    //   // console.log(price.toString());
+    //   // console.log(metadata);
+    //   // console.log(num);
 
-      var transfer = await DRM.methods
-        .tokenGenerate(
-          contributes,
-          percentages,
-          constraints,
-          price.toString(),
-          metadata,
-          num //deployNum
-        )
-        .encodeABI();
-      await sendTxn(transfer);
-      res.redirect('/index');
-    } catch (err) {
-      console.log(err);
-      res.send(err);
-    }
+    //   var transfer = await DRM.methods
+    //     .tokenGenerate(
+    //       contributes,
+    //       percentages,
+    //       constraints,
+    //       price.toString(),
+    //       metadata,
+    //       num //deployNum
+    //     )
+    //     .encodeABI();
+    //   await sendTxn(transfer);
+    //   res.redirect('/index');
+    // } catch (err) {
+    //   console.log(err);
+    //   res.send(err);
+    // }
   }
 );
 
