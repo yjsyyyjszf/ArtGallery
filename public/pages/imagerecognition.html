@@ -95,11 +95,9 @@
                     class="col-lg-8 align-self-baseline" onchange="loadFile(event)" style="display: none;"></p>
                 <h1><label for="fileName" style="cursor: pointer;">Upload Image</label></h1>
                 <p><img id="output" class="figure" /></p>
-
                 <br>
                 <button type="submit" id="imgSubmit" style="display: none;" class="btn btn-primary mb-2">Next</button>
               </form>
-
               <script>
                 var loadFile = function (event) {
                   var image = document.getElementById('output'); 
@@ -127,11 +125,6 @@
         </p>
       </div>
     </div>
-
-
-
-
-
   </div>
   <script type="module" src="../public/js/imgUpload-bundle.js"></script>
   <script src="../public/js/jquery-3.3.1.min.js"></script>
@@ -157,8 +150,6 @@
     $(document).ready(function () {
       $('#lightgallery').lightGallery();
     });
-
-   
   </script>
   <script>
     includeHTML();

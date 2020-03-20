@@ -226,9 +226,15 @@
                     </div>
                   </div>
 
-
+                  <div class="row form-group">  
+                    <div class="col-md-12">
+                      <input type="button" onclick="searchSimilarImages()" value="Search for Similar Images" class="btn btn-primary py-2 px-4 text-white"> 
+                    </div>
+                  </div>
+  
+<!-- 
                   <input type="text" class="form-control mb-2 mr-sm-2" id="displayResult"
-                    style="font-weight: bold;color: darkblue;" />
+                    style="font-weight: bold;color: darkblue;" /> -->
                   <button type="submit" class="btn btn-primary mb-2">Submit</button>
                 </div>
               </form>
@@ -238,21 +244,29 @@
               var loadFile = function (event) {
                 var image = document.getElementById('output');
                 image.src = URL.createObjectURL(event.target.files[0]);
-
                 var btn = document.getElementById('submit');
                 btn.style.display = "inline";
                 getResult();
               };
             </script>
             <script>
-              // function saveImageToServer() {
-              //   document.getElementById("displayResultLabel").style.display = "inline";
-              // }
+
+              function searchSimilarImages(){
+                var tags = document.getElementById("displayResult").value;
+                
+                //alert(tags);
+                tags=tags.replace(/#/g," ")
+               // url='https://www.google.com/search?tbm=isch&as_q='+tags.replace(/ /g,'')+'&tbs=isz:lt,islt:4mp,sur:fmc';
+                url='https://www.google.com/search?q='+tags+'&tbm=isch'
+                // url.concat(tags);
+               console.log(url);
+                window.open(url, "_blank");
+              }
+
 
               function getResult() {
                 getResultFromGoogleVision();
               }
-
 
               function getResultFromGoogleVision() {
                 let data = null;
