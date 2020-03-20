@@ -18,7 +18,7 @@ app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
 
 let web3;
-let DRM_address = "0xdea1bdca2d90296face99266ca431920bed90d39";
+let DRM_address = "0xe98b38747c548d3d76f7bd2989d9f093dd322101";
 let DRM_owner = "0x5efDD3CAb3c3Ea3D1725B8EaF340Cc8d5a9B7547";
 let DRM_ownerKey =
   "45F93E7A6CF774228519708AA97529A9CE2A663E26E67F183FE49BB9C90D468D";
@@ -176,6 +176,7 @@ const upload = multer({
   // you might also want to set some limits: https://github.com/expressjs/multer#limits
 });
 
+/** just save image to server required to do this to generate tags */
 app.post(
   "/uploads",
   upload.single(
@@ -194,6 +195,8 @@ app.post(
         return  res.sendFile(path.resolve("./public/pages/imagerecognition-I.html"));
     });
   });
+
+/** after saving image to server do drm part */
 app.post(
   "/upload",
   upload.single(
@@ -203,65 +206,58 @@ app.post(
     const tempPath = req.file.path;
     console.log(req.file);
     console.log("tempPath :" + tempPath);
-    const targetPath = path.join(__dirname, "./uploads/" + req.file.originalname);
-    // if (path.extname(req.file.originalname).toLowerCase() === ".png"){
-    // if (path.extname(req.file.originalname).toLowerCase() === ".jpg") {
-    fs.rename(tempPath, targetPath , err => {
-      if (err) return handleError(err, res);
-      else
-        return res.status(200);
-    });
     
-    // var url = `http://localhost:3000/uploads/${req.body.title}.png`;
-    // try {
-    //   var wallet = req.body.artistWallet;
-    //   console.log(wallet);
-    //   var contributes = req.body.contributes; // address array -- [addr1, addr2]
-    //   if (contributes == undefined) {
-    //     var arr = [];
-    //     arr.push(wallet);
-    //     contributes = arr;
-    //     percentages = [];
-    //   } else {
-    //     contributes = contributes.split(",");
-    //     var percentages = req.body.percentages; // % array 1-10 -- [5,5]
-    //     percentages = percentages.split(",");
-    //   }
-    //   var constraints = req.body.constraints; // nullable string array -- ["School","Governmant","Bank"]
-    //   var price = req.body.price;
-    //   price = new BigNumber(price * 1000000000000000000);
-    //   var num = req.body.num;
-    //   var name = req.body.title;
-    //   var artist = req.body.artists;
-    //   var description = req.body.description;
-    //   var realart = "";
-    //   var thumbnail = url; // URL only
-    //   /**
-    //    *  upload File to server, generate an URL
-    //    **/
-    //   var metadata = [name, artist, description, realart, thumbnail];
-    //   // console.log(contributes);
-    //   // console.log(percentages);
-    //   // console.log(price.toString());
-    //   // console.log(metadata);
-    //   // console.log(num);
+    
+    var url = `http://localhost:3000/uploads/${req.body.title}.png`;
+    try {
+      var wallet = req.body.artistWallet;
+      console.log(wallet);
+      var contributes = req.body.contributes; // address array -- [addr1, addr2]
+      if (contributes == undefined) {
+        var arr = [];
+        arr.push(wallet);
+        contributes = arr;
+        percentages = [];
+      } else {
+        contributes = contributes.split(",");
+        var percentages = req.body.percentages; // % array 1-10 -- [5,5]
+        percentages = percentages.split(",");
+      }
+      var constraints = req.body.constraints; // nullable string array -- ["School","Governmant","Bank"]
+      var price = req.body.price;
+      price = new BigNumber(price * 1000000000000000000);
+      var num = req.body.num;
+      var name = req.body.title;
+      var artist = req.body.artists;
+      var description = req.body.description;
+      var realart = "";
+      var thumbnail = url; // URL only
+      /**
+       *  upload File to server, generate an URL
+       **/
+      var metadata = [name, artist, description, realart, thumbnail];
+      // console.log(contributes);
+      // console.log(percentages);
+      // console.log(price.toString());
+      // console.log(metadata);
+      // console.log(num);
 
-    //   var transfer = await DRM.methods
-    //     .tokenGenerate(
-    //       contributes,
-    //       percentages,
-    //       constraints,
-    //       price.toString(),
-    //       metadata,
-    //       num //deployNum
-    //     )
-    //     .encodeABI();
-    //   await sendTxn(transfer);
-    //   res.redirect('/index');
-    // } catch (err) {
-    //   console.log(err);
-    //   res.send(err);
-    // }
+      var transfer = await DRM.methods
+        .tokenGenerate(
+          contributes,
+          percentages,
+          constraints,
+          price.toString(),
+          metadata,
+          num //deployNum
+        )
+        .encodeABI();
+      await sendTxn(transfer);
+      res.redirect("/index");
+        }catch (err) {
+      console.log(err);
+      res.send(err);
+    }
   }
 );
 
@@ -305,11 +301,12 @@ app.post("/sign_up", async function(req, res) {
   var artistWallet = req.body.artistWallet;
   var metamaskId = req.body.metamaskId;
   var category = req.body.category;
-
-  var transfer = await DRM.methods
-    .artistRegister(name, artistWallet)
-    .encodeABI();
-  await sendTxn(transfer);
+  if (artistWallet != null) {
+    var transfer = await DRM.methods
+      .artistRegister(name, artistWallet)
+      .encodeABI();
+    await sendTxn(transfer);
+  }
 
   var data = {
     name: name,
@@ -439,34 +436,30 @@ app.get("/getOnStoreTokens/", async (req, res) => {
   if (storeList.length) {
     for (var i = 0; i < storeList.length; i++) {
       var artwork = await DRM.methods.artworks(storeList[i]).call();
+      var owner = await DRM.methods.tokenToArtists(storeList[i], 0).call();
       artwork.id = storeList[i];
+      artwork.owner = owner;
       resJson.push(artwork);
     }
   }
   res.send(resJson);
 });
 app.get("/getTokenByCreator/", async (req, res) => {
-  var artists = await DRM.methods.getArtist().call();
-  for (var i = 0; i < artists.names.length; i++) {
-    console.log("blockchain=>" + artists.addresses[i]);
-    if (req.param("artist") == artists.names[i]) {
-      var storeList = await DRM.methods
-        .getTokenByCreator(artists.addresses[i])
-        .call();
-      console.log(storeList);
-      var resJson = [];
-      if (storeList.length) {
-        for (var i = 0; i < storeList.length; i++) {
-          var artwork = await DRM.methods.artworks(storeList[i]).call();
-          artwork.id = storeList[i];
-          resJson.push(artwork);
-        }
-      }
-      res.send(resJson);
-      return;
+  console.log(req.param("artist"));
+  var storeList = await DRM.methods
+    .getTokenByCreator(req.param("artist"))
+    .call();
+  console.log(storeList);
+  var resJson = [];
+  if (storeList.length) {
+    for (var i = 0; i < storeList.length; i++) {
+      var artwork = await DRM.methods.artworks(storeList[i]).call();
+      artwork.id = storeList[i];
+      resJson.push(artwork);
     }
   }
-  res.send("Not Found");
+  res.send(resJson);
+  return;
 });
 app.post("/artistRegister/", async (req, res) => {
   try {

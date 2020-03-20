@@ -8,6 +8,7 @@ if (window.ethereum) {
     .then(res => {
       // res[0];
       document.getElementById("artistWallet").value = res[0];
+      document.getElementById("artistWallet2").value = res[0];
     })
     .catch(err => null);
 } else if (window.web3) {
