@@ -176,6 +176,27 @@ const upload = multer({
   // you might also want to set some limits: https://github.com/expressjs/multer#limits
 });
 
+/** just save image to server required to do this to generate tags */
+app.post(
+  "/uploads",
+  upload.single(
+    "userPhoto" /* name attribute of <file> element in your form */
+  ),
+  async (req, res) => {
+    const tempPath = req.file.path;
+    console.log(req.file);
+    console.log("tempPath :" + tempPath);
+    const targetPath = path.join(__dirname, "./uploads/" + req.file.originalname);
+    // if (path.extname(req.file.originalname).toLowerCase() === ".png"){
+    // if (path.extname(req.file.originalname).toLowerCase() === ".jpg") {
+    fs.rename(tempPath, targetPath , err => {
+      if (err) return handleError(err, res);
+      else
+        return  res.sendFile(path.resolve("./public/pages/imagerecognition-I.html"));
+    });
+  });
+
+/** after saving image to server do drm part */
 app.post(
   "/upload",
   upload.single(
@@ -185,21 +206,8 @@ app.post(
     const tempPath = req.file.path;
     console.log(req.file);
     console.log("tempPath :" + tempPath);
-    const targetPath = path.join(__dirname, "./uploads/" + req.body.title);
-    // if (path.extname(req.file.originalname).toLowerCase() === ".png"){
-    // if (path.extname(req.file.originalname).toLowerCase() === ".jpg") {
-    fs.rename(tempPath, targetPath + ".png", err => {
-      if (err) return handleError(err, res);
-    });
-    // } else {
-    //   fs.unlink(tempPath, err => {
-    //     if (err) return handleError(err, res);
-    //     res
-    //       .status(403)
-    //       .contentType("text/plain")
-    //       .end(err);
-    //   });
-    // var url = `https://artgallery07.herokuapp.com/uploads/${req.body.title}.png`;
+    
+    
     var url = `http://localhost:3000/uploads/${req.body.title}.png`;
     try {
       var wallet = req.body.artistWallet;
@@ -246,7 +254,7 @@ app.post(
         .encodeABI();
       await sendTxn(transfer);
       res.redirect("/index");
-    } catch (err) {
+        }catch (err) {
       console.log(err);
       res.send(err);
     }
