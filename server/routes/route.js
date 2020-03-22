@@ -42,6 +42,9 @@ clientRouter.get("/imageUpload", (request, response) => {
 clientRouter.get("/assets", (request, response) => {
   response.sendFile(path.resolve("./public/pages/assets.html"));
 });
+clientRouter.get("/detail", (request, response) => {
+  response.sendFile(path.resolve("./public/pages/detail.html"));
+});
 clientRouter.get("/imgrecognition", (request, response) => {
   response.sendFile(path.resolve("./public/pages/imagerecognition.html"));
 });

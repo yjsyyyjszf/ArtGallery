@@ -74,6 +74,24 @@ module.exports = [
   },
   {
     constant: false,
+    inputs: [
+      {
+        name: "_tokenId",
+        type: "uint256"
+      },
+      {
+        name: "_newPrice",
+        type: "uint256"
+      }
+    ],
+    name: "postToken",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function"
+  },
+  {
+    constant: false,
     inputs: [],
     name: "renounceOwnership",
     outputs: [],
@@ -207,6 +225,28 @@ module.exports = [
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
+    type: "function"
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        name: "_from",
+        type: "address"
+      },
+      {
+        name: "_to",
+        type: "address"
+      },
+      {
+        name: "_tokenId",
+        type: "uint256"
+      }
+    ],
+    name: "tradeToken",
+    outputs: [],
+    payable: true,
+    stateMutability: "payable",
     type: "function"
   },
   {
@@ -517,6 +557,25 @@ module.exports = [
       {
         name: "",
         type: "uint256"
+      }
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        name: "",
+        type: "uint256"
+      }
+    ],
+    name: "forSaleTokens",
+    outputs: [
+      {
+        name: "",
+        type: "bool"
       }
     ],
     payable: false,
@@ -50528,7 +50587,7 @@ var div = document.getElementById("artistName");
 window.web3 = new Web3(window.ethereum);
 const DRM = new window.web3.eth.Contract(
   abi,
-  "0xe98b38747c548d3d76f7bd2989d9f093dd322101"
+  "0x55fc1a638bc0fd67c2eba06040aff445d72745c6"
 );
 getName(DRM, sURLVariables[1]);
 async function getName(DRM, wallet) {
@@ -50568,7 +50627,6 @@ axios
       newDiv.appendChild(newA);
       var newBtn = document.createElement("button");
       newBtn.innerHTML = "Buy";
-
       newBtn.setAttribute("value", `${res.data[i].id}`);
       newBtn.onclick = async e => {
         var unit = await axios.get(
@@ -50578,7 +50636,7 @@ axios
         window.web3 = new Web3(window.ethereum);
         const DRM = new window.web3.eth.Contract(
           abi,
-          "0xe98b38747c548d3d76f7bd2989d9f093dd322101"
+          "0x55fc1a638bc0fd67c2eba06040aff445d72745c6"
         );
         let id = e.target.value;
         var price = await DRM.methods.tokenPrices(id).call();

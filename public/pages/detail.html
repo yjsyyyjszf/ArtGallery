@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<div w3-include-html="./header.html"></div>
+<head>
+  <title> e</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300i,400,700" rel="stylesheet">
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+  <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../public/css/magnific-popup.css">
+  <link rel="stylesheet" href="../public/css/jquery-ui.css">
+  <link rel="stylesheet" href="../public/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="../public/css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="../public/css/lightgallery.min.css">    
+  <link rel="stylesheet" href="../public/css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="../public/fonts/flaticon/font/flaticon.css">
+  <link rel="stylesheet" href="../public/css/swiper.css">
+  <link rel="stylesheet" href="../public/css/aos.css">
+  <link rel="stylesheet" href="../public/css/style.css">
+ 
+</head>
+<style>
+    .tooltip2 {
+      position: relative;
+      display: inline-block;
+      border-bottom: 1px dotted black;
+    }
+    
+    .tooltip2 .tooltiptext2 {
+      visibility: hidden;
+      width: 300px;
+      background-color: black;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px 0;
+    
+      /* Position the tooltip */
+      position: absolute;
+      z-index: 1;
+    }
+    
+    .tooltip2:hover .tooltiptext2 {
+      visibility: visible;
+    }
+    </style>
+<body>
+
+<span id="unit" hidden></span>
+
+  <div class="site-section" data-aos="fade">
+    <div class="container-fluid">
+      
+      <div class="row justify-content-center">
+        <div class="col-md-7">
+          <div class="row mb-5">
+            <div class="col-12 ">
+              <h2 id="tittle" class="site-section-heading text-center"></h2>
+            </div>
+          </div>
+          <div id="wallet" hidden></div>
+          <div id="tokenId" hidden></div>
+          <div id="resell" class="row">
+            <div class="col-lg-8 mb-5">
+              <form action="/resell" method="post">
+                <img id="artwork"></img>
+
+                <p>You can re-sell this token on artist page:</p>
+                <div class="row form-group">
+                  <div class="col-md-12">
+                    <label class="text-black" for="price">Price(ETH) ~= <span id="priceUSD"></span> USD</label> 
+                    <input id="price" type="number" name="price" class="form-control" step="0.001" onchange="unit()">
+                  </div>
+                </div>
+
+                <div class="row form-group">
+                  <div class="col-md-12">
+                    <input id="submit" type="button" value="Resell" class="btn btn-primary py-2 px-4 text-white">
+                  </div>
+                </div>
+    
+              </form>
+            </div>
+            <div class="col-lg-3 ml-auto">
+              <div class="mb-3 bg-white">
+                <p class="mb-0 font-weight-bold">Address</p>
+                <p class="mb-4">Toronto, On, Canada</p>
+
+                <p class="mb-0 font-weight-bold">Phone</p>
+                <p class="mb-4"><a href="#">+1 232 3235 324</a></p>
+
+                <p class="mb-0 font-weight-bold">Email Address</p>
+                <p class="mb-0"><a href="#">email@domain.com</a></p>
+
+              </div>
+              
+            </div>
+          </div>
+        </div>
+    
+      </div>
+    </div>
+  </div>
+
+  <div class="footer py-4">
+    <div class="container-fluid text-center">
+        <p>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy;<script data-cfasync="false"
+                src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+            <script>
+                document.write(new Date().getFullYear());
+            </script> All rights reserved | Made with <i class="icon-heart-o"
+                aria-hidden="true"></i> by <a href="https://www.trinitysquarevideo.com/" target="_blank">Trinity Square Video</a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+        </p>
+    </div>
+</div>
+
+     
+
+    
+    
+  </div>
+  <script type="module" src="../public/js/detail-bundle.js"></script>
+  
+  <script src="../public/js/jquery-3.3.1.min.js"></script>
+  <script src="../public/js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="../public/js/jquery-ui.js"></script>
+  <script src="../public/js/popper.min.js"></script>
+  <script src="../public/js/bootstrap.min.js"></script>
+  <script src="../public/js/owl.carousel.min.js"></script>
+  <script src="../public/js/jquery.stellar.min.js"></script>
+  <script src="../public/js/jquery.countdown.min.js"></script>
+  <script src="../public/js/jquery.magnific-popup.min.js"></script>
+  <script src="../public/js/bootstrap-datepicker.min.js"></script>
+  <script src="../public/js/swiper.min.js"></script>
+  <script src="../public/js/aos.js"></script>
+  
+  <script src="../public/js/picturefill.min.js"></script>
+  <script src="../public/js/lightgallery-all.min.js"></script>
+  <script src="../public/js/jquery.mousewheel.min.js"></script>
+  <script src="../public/js/main.js"></script>
+  
+  <script>
+    // $(document).ready(function(){
+    //   $('#lightgallery').lightGallery();
+    // });
+  </script>
+      <script>
+        var sPageURL = window.location.href;
+        var sURLVariables = sPageURL.split('?');
+        // alert(sURLVariables[1]);
+        document.getElementById("thumbnail").value = "https://artgallery07.herokuapp.com/uploads/"+sURLVariables[1]+".png";
+
+        // includeHTML();
+        function unit(){
+          var unit = document.getElementById("unit").value;
+          console.log(unit);
+          var price = document.getElementById("price").value;
+          document.getElementById("priceUSD").innerHTML = unit * price;
+          
+        }
+        </script>
+  </body>
+</html>

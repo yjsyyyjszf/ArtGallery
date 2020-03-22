@@ -30,7 +30,7 @@ async function assetSet(token) {
   newDiv.setAttribute("data-src", `${token.thumbnail}`);
   newDiv.setAttribute("data-sub-html", "<h4>Fading Light</h4>");
   var newA = document.createElement("a");
-  newA.setAttribute("href", "#");
+  newA.setAttribute("href", `/detail?token=${token.id}`);
   var newImg = document.createElement("img");
   newImg.setAttribute("src", `${token.thumbnail}`);
   newImg.setAttribute("class", `img-fluid`);

@@ -73,6 +73,24 @@ module.exports = [
   },
   {
     constant: false,
+    inputs: [
+      {
+        name: "_tokenId",
+        type: "uint256"
+      },
+      {
+        name: "_newPrice",
+        type: "uint256"
+      }
+    ],
+    name: "postToken",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function"
+  },
+  {
+    constant: false,
     inputs: [],
     name: "renounceOwnership",
     outputs: [],
@@ -206,6 +224,28 @@ module.exports = [
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
+    type: "function"
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        name: "_from",
+        type: "address"
+      },
+      {
+        name: "_to",
+        type: "address"
+      },
+      {
+        name: "_tokenId",
+        type: "uint256"
+      }
+    ],
+    name: "tradeToken",
+    outputs: [],
+    payable: true,
+    stateMutability: "payable",
     type: "function"
   },
   {
@@ -516,6 +556,25 @@ module.exports = [
       {
         name: "",
         type: "uint256"
+      }
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        name: "",
+        type: "uint256"
+      }
+    ],
+    name: "forSaleTokens",
+    outputs: [
+      {
+        name: "",
+        type: "bool"
       }
     ],
     payable: false,

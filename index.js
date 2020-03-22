@@ -18,7 +18,7 @@ app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
 
 let web3;
-let DRM_address = "0xe98b38747c548d3d76f7bd2989d9f093dd322101";
+let DRM_address = "0x55fc1a638bc0fd67c2eba06040aff445d72745c6";
 let DRM_owner = "0x5efDD3CAb3c3Ea3D1725B8EaF340Cc8d5a9B7547";
 let DRM_ownerKey =
   "45F93E7A6CF774228519708AA97529A9CE2A663E26E67F183FE49BB9C90D468D";

@@ -12,7 +12,7 @@ var div = document.getElementById("artistName");
 window.web3 = new Web3(window.ethereum);
 const DRM = new window.web3.eth.Contract(
   abi,
-  "0xe98b38747c548d3d76f7bd2989d9f093dd322101"
+  "0x55fc1a638bc0fd67c2eba06040aff445d72745c6"
 );
 getName(DRM, sURLVariables[1]);
 async function getName(DRM, wallet) {
@@ -61,7 +61,7 @@ axios
         window.web3 = new Web3(window.ethereum);
         const DRM = new window.web3.eth.Contract(
           abi,
-          "0xe98b38747c548d3d76f7bd2989d9f093dd322101"
+          "0x55fc1a638bc0fd67c2eba06040aff445d72745c6"
         );
         let id = e.target.value;
         var price = await DRM.methods.tokenPrices(id).call();
