@@ -49608,10 +49608,6 @@ axios2
     "https://api.etherscan.io/api?module=stats&action=ethprice&apikey=IKKPZRZQD3FJ88KSBBQFT4Q7Z9Q8ME6UHC"
   )
   .then(res => {
-    console.log(res);
-    console.log(`res`);
-    console.log(res.result);
-    console.log(res.data.result.ethusd);
     document.getElementById("unit").value = res.data.result.ethusd;
   });
 
